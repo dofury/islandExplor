@@ -36,21 +36,29 @@ Partial Class Game
         Me.gamePortrait = New System.Windows.Forms.PictureBox()
         Me.gameIcon = New System.Windows.Forms.PictureBox()
         Me.startButton = New System.Windows.Forms.PictureBox()
+        Me.infoButton = New System.Windows.Forms.PictureBox()
+        Me.endButton = New System.Windows.Forms.PictureBox()
+        Me.infoContext = New System.Windows.Forms.Panel()
+        Me.infoText = New System.Windows.Forms.Label()
+        Me.xButton = New System.Windows.Forms.PictureBox()
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.startButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.infoButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.endButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.infoContext.SuspendLayout()
+        CType(Me.xButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'gameText
         '
-        Me.gameText.AutoSize = True
         Me.gameText.BackColor = System.Drawing.Color.Transparent
         Me.gameText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.gameText.Location = New System.Drawing.Point(225, 89)
+        Me.gameText.Location = New System.Drawing.Point(223, 41)
         Me.gameText.Margin = New System.Windows.Forms.Padding(0)
         Me.gameText.Name = "gameText"
-        Me.gameText.Size = New System.Drawing.Size(102, 41)
+        Me.gameText.Size = New System.Drawing.Size(947, 132)
         Me.gameText.TabIndex = 1
         Me.gameText.Text = "메세지"
         '
@@ -183,12 +191,68 @@ Partial Class Game
         Me.startButton.BackColor = System.Drawing.Color.Transparent
         Me.startButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.startButton.Image = Global.islandExploration.My.Resources.Resources.startButton
-        Me.startButton.Location = New System.Drawing.Point(497, 458)
+        Me.startButton.Location = New System.Drawing.Point(498, 383)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(270, 69)
         Me.startButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.startButton.TabIndex = 3
         Me.startButton.TabStop = False
+        '
+        'infoButton
+        '
+        Me.infoButton.BackColor = System.Drawing.Color.Transparent
+        Me.infoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.infoButton.Image = Global.islandExploration.My.Resources.Resources.infoButton
+        Me.infoButton.Location = New System.Drawing.Point(497, 458)
+        Me.infoButton.Name = "infoButton"
+        Me.infoButton.Size = New System.Drawing.Size(270, 69)
+        Me.infoButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.infoButton.TabIndex = 7
+        Me.infoButton.TabStop = False
+        '
+        'endButton
+        '
+        Me.endButton.BackColor = System.Drawing.Color.Transparent
+        Me.endButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.endButton.Image = Global.islandExploration.My.Resources.Resources.endButton
+        Me.endButton.Location = New System.Drawing.Point(498, 533)
+        Me.endButton.Name = "endButton"
+        Me.endButton.Size = New System.Drawing.Size(270, 69)
+        Me.endButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.endButton.TabIndex = 8
+        Me.endButton.TabStop = False
+        '
+        'infoContext
+        '
+        Me.infoContext.BackColor = System.Drawing.Color.Transparent
+        Me.infoContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.context
+        Me.infoContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.infoContext.Controls.Add(Me.infoText)
+        Me.infoContext.Controls.Add(Me.xButton)
+        Me.infoContext.Location = New System.Drawing.Point(1, 2)
+        Me.infoContext.Name = "infoContext"
+        Me.infoContext.Size = New System.Drawing.Size(1263, 131)
+        Me.infoContext.TabIndex = 9
+        Me.infoContext.Visible = False
+        '
+        'infoText
+        '
+        Me.infoText.AutoSize = True
+        Me.infoText.Location = New System.Drawing.Point(36, 68)
+        Me.infoText.Name = "infoText"
+        Me.infoText.Size = New System.Drawing.Size(43, 15)
+        Me.infoText.TabIndex = 1
+        Me.infoText.Text = "메세지"
+        '
+        'xButton
+        '
+        Me.xButton.Image = Global.islandExploration.My.Resources.Resources.xButton
+        Me.xButton.Location = New System.Drawing.Point(1202, 0)
+        Me.xButton.Name = "xButton"
+        Me.xButton.Size = New System.Drawing.Size(61, 61)
+        Me.xButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.xButton.TabIndex = 0
+        Me.xButton.TabStop = False
         '
         'Game
         '
@@ -196,9 +260,12 @@ Partial Class Game
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1264, 985)
+        Me.Controls.Add(Me.endButton)
+        Me.Controls.Add(Me.infoButton)
         Me.Controls.Add(Me.startButton)
         Me.Controls.Add(Me.gameContext)
         Me.Controls.Add(Me.gameIcon)
+        Me.Controls.Add(Me.infoContext)
         Me.DoubleBuffered = True
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -208,6 +275,11 @@ Partial Class Game
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.startButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.infoButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.endButton, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.infoContext.ResumeLayout(False)
+        Me.infoContext.PerformLayout()
+        CType(Me.xButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -225,4 +297,9 @@ Partial Class Game
     Friend WithEvents skipMenu As Label
     Friend WithEvents saveMenu As Label
     Friend WithEvents loadMenu As Label
+    Friend WithEvents infoButton As PictureBox
+    Friend WithEvents endButton As PictureBox
+    Friend WithEvents infoContext As Panel
+    Friend WithEvents xButton As PictureBox
+    Friend WithEvents infoText As Label
 End Class
