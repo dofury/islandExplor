@@ -25,6 +25,7 @@ Partial Class Game
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Game))
         Me.gameText = New System.Windows.Forms.Label()
         Me.gameContext = New System.Windows.Forms.Panel()
+        Me.loadMenu = New System.Windows.Forms.Label()
         Me.saveMenu = New System.Windows.Forms.Label()
         Me.skipMenu = New System.Windows.Forms.Label()
         Me.autoMenu = New System.Windows.Forms.Label()
@@ -32,12 +33,11 @@ Partial Class Game
         Me.quitMenu = New System.Windows.Forms.Label()
         Me.titleMenu = New System.Windows.Forms.Label()
         Me.gameName = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.gamePortrait = New System.Windows.Forms.PictureBox()
         Me.gameIcon = New System.Windows.Forms.PictureBox()
         Me.startButton = New System.Windows.Forms.PictureBox()
-        Me.loadMenu = New System.Windows.Forms.Label()
         Me.gameContext.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.startButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -46,7 +46,7 @@ Partial Class Game
         '
         Me.gameText.AutoSize = True
         Me.gameText.BackColor = System.Drawing.Color.Transparent
-        Me.gameText.Font = New System.Drawing.Font("함초롬돋움 확장", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.gameText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.gameText.Location = New System.Drawing.Point(225, 89)
         Me.gameText.Margin = New System.Windows.Forms.Padding(0)
         Me.gameText.Name = "gameText"
@@ -67,12 +67,22 @@ Partial Class Game
         Me.gameContext.Controls.Add(Me.quitMenu)
         Me.gameContext.Controls.Add(Me.titleMenu)
         Me.gameContext.Controls.Add(Me.gameName)
-        Me.gameContext.Controls.Add(Me.PictureBox1)
+        Me.gameContext.Controls.Add(Me.gamePortrait)
         Me.gameContext.Controls.Add(Me.gameText)
         Me.gameContext.Location = New System.Drawing.Point(1, 758)
         Me.gameContext.Name = "gameContext"
         Me.gameContext.Size = New System.Drawing.Size(1263, 226)
         Me.gameContext.TabIndex = 2
+        '
+        'loadMenu
+        '
+        Me.loadMenu.AutoSize = True
+        Me.loadMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.loadMenu.Location = New System.Drawing.Point(796, 194)
+        Me.loadMenu.Name = "loadMenu"
+        Me.loadMenu.Size = New System.Drawing.Size(81, 25)
+        Me.loadMenu.TabIndex = 10
+        Me.loadMenu.Text = "[LOAD]"
         '
         'saveMenu
         '
@@ -137,24 +147,24 @@ Partial Class Game
         'gameName
         '
         Me.gameName.BackColor = System.Drawing.Color.Transparent
-        Me.gameName.Font = New System.Drawing.Font("은 돋움", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.gameName.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.gameName.Location = New System.Drawing.Point(36, 176)
         Me.gameName.Margin = New System.Windows.Forms.Padding(0)
         Me.gameName.Name = "gameName"
         Me.gameName.Size = New System.Drawing.Size(150, 43)
         Me.gameName.TabIndex = 3
-        Me.gameName.Text = "김춘배(냥인 3세)"
+        Me.gameName.Text = "이름"
         Me.gameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'PictureBox1
+        'gamePortrait
         '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(36, 23)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(150, 150)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 2
-        Me.PictureBox1.TabStop = False
+        Me.gamePortrait.Image = CType(resources.GetObject("gamePortrait.Image"), System.Drawing.Image)
+        Me.gamePortrait.Location = New System.Drawing.Point(49, 23)
+        Me.gamePortrait.Name = "gamePortrait"
+        Me.gamePortrait.Size = New System.Drawing.Size(122, 150)
+        Me.gamePortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.gamePortrait.TabIndex = 2
+        Me.gamePortrait.TabStop = False
         '
         'gameIcon
         '
@@ -180,16 +190,6 @@ Partial Class Game
         Me.startButton.TabIndex = 3
         Me.startButton.TabStop = False
         '
-        'loadMenu
-        '
-        Me.loadMenu.AutoSize = True
-        Me.loadMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.loadMenu.Location = New System.Drawing.Point(796, 194)
-        Me.loadMenu.Name = "loadMenu"
-        Me.loadMenu.Size = New System.Drawing.Size(81, 25)
-        Me.loadMenu.TabIndex = 10
-        Me.loadMenu.Text = "[LOAD]"
-        '
         'Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -205,7 +205,7 @@ Partial Class Game
         Me.Text = "Game"
         Me.gameContext.ResumeLayout(False)
         Me.gameContext.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.startButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -215,7 +215,7 @@ Partial Class Game
     Friend WithEvents gameText As Label
     Friend WithEvents gameContext As Panel
     Friend WithEvents gameName As Label
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents gamePortrait As PictureBox
     Friend WithEvents startButton As PictureBox
     Friend WithEvents titleMenu As Label
     Friend WithEvents quitMenu As Label
