@@ -25,10 +25,21 @@ Partial Class Game
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Game))
         Me.gameText = New System.Windows.Forms.Label()
         Me.gameContext = New System.Windows.Forms.Panel()
+        Me.saveMenu = New System.Windows.Forms.Label()
+        Me.skipMenu = New System.Windows.Forms.Label()
+        Me.autoMenu = New System.Windows.Forms.Label()
+        Me.closeMenu = New System.Windows.Forms.Label()
+        Me.quitMenu = New System.Windows.Forms.Label()
+        Me.titleMenu = New System.Windows.Forms.Label()
         Me.gameName = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.gameIcon = New System.Windows.Forms.PictureBox()
+        Me.startButton = New System.Windows.Forms.PictureBox()
+        Me.loadMenu = New System.Windows.Forms.Label()
         Me.gameContext.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.startButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'gameText
@@ -48,6 +59,13 @@ Partial Class Game
         Me.gameContext.BackColor = System.Drawing.Color.Transparent
         Me.gameContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.context
         Me.gameContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.gameContext.Controls.Add(Me.loadMenu)
+        Me.gameContext.Controls.Add(Me.saveMenu)
+        Me.gameContext.Controls.Add(Me.skipMenu)
+        Me.gameContext.Controls.Add(Me.autoMenu)
+        Me.gameContext.Controls.Add(Me.closeMenu)
+        Me.gameContext.Controls.Add(Me.quitMenu)
+        Me.gameContext.Controls.Add(Me.titleMenu)
         Me.gameContext.Controls.Add(Me.gameName)
         Me.gameContext.Controls.Add(Me.PictureBox1)
         Me.gameContext.Controls.Add(Me.gameText)
@@ -55,6 +73,66 @@ Partial Class Game
         Me.gameContext.Name = "gameContext"
         Me.gameContext.Size = New System.Drawing.Size(1263, 226)
         Me.gameContext.TabIndex = 2
+        '
+        'saveMenu
+        '
+        Me.saveMenu.AutoSize = True
+        Me.saveMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.saveMenu.Location = New System.Drawing.Point(727, 194)
+        Me.saveMenu.Name = "saveMenu"
+        Me.saveMenu.Size = New System.Drawing.Size(74, 25)
+        Me.saveMenu.TabIndex = 9
+        Me.saveMenu.Text = "[SAVE]"
+        '
+        'skipMenu
+        '
+        Me.skipMenu.AutoSize = True
+        Me.skipMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.skipMenu.Location = New System.Drawing.Point(874, 194)
+        Me.skipMenu.Name = "skipMenu"
+        Me.skipMenu.Size = New System.Drawing.Size(68, 25)
+        Me.skipMenu.TabIndex = 8
+        Me.skipMenu.Text = "[SKIP]"
+        '
+        'autoMenu
+        '
+        Me.autoMenu.AutoSize = True
+        Me.autoMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.autoMenu.Location = New System.Drawing.Point(936, 194)
+        Me.autoMenu.Name = "autoMenu"
+        Me.autoMenu.Size = New System.Drawing.Size(80, 25)
+        Me.autoMenu.TabIndex = 7
+        Me.autoMenu.Text = "[AUTO]"
+        '
+        'closeMenu
+        '
+        Me.closeMenu.AutoSize = True
+        Me.closeMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.closeMenu.Location = New System.Drawing.Point(1012, 194)
+        Me.closeMenu.Name = "closeMenu"
+        Me.closeMenu.Size = New System.Drawing.Size(87, 25)
+        Me.closeMenu.TabIndex = 6
+        Me.closeMenu.Text = "[CLOSE]"
+        '
+        'quitMenu
+        '
+        Me.quitMenu.AutoSize = True
+        Me.quitMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.quitMenu.Location = New System.Drawing.Point(1166, 194)
+        Me.quitMenu.Name = "quitMenu"
+        Me.quitMenu.Size = New System.Drawing.Size(74, 25)
+        Me.quitMenu.TabIndex = 5
+        Me.quitMenu.Text = "[QUIT]"
+        '
+        'titleMenu
+        '
+        Me.titleMenu.AutoSize = True
+        Me.titleMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.titleMenu.Location = New System.Drawing.Point(1095, 194)
+        Me.titleMenu.Name = "titleMenu"
+        Me.titleMenu.Size = New System.Drawing.Size(75, 25)
+        Me.titleMenu.TabIndex = 4
+        Me.titleMenu.Text = "[TITLE]"
         '
         'gameName
         '
@@ -78,13 +156,49 @@ Partial Class Game
         Me.PictureBox1.TabIndex = 2
         Me.PictureBox1.TabStop = False
         '
+        'gameIcon
+        '
+        Me.gameIcon.BackColor = System.Drawing.Color.Transparent
+        Me.gameIcon.Image = Global.islandExploration.My.Resources.Resources.icon
+        Me.gameIcon.Location = New System.Drawing.Point(1210, 698)
+        Me.gameIcon.Name = "gameIcon"
+        Me.gameIcon.Size = New System.Drawing.Size(54, 54)
+        Me.gameIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.gameIcon.TabIndex = 6
+        Me.gameIcon.TabStop = False
+        Me.gameIcon.Visible = False
+        '
+        'startButton
+        '
+        Me.startButton.BackColor = System.Drawing.Color.Transparent
+        Me.startButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.startButton.Image = Global.islandExploration.My.Resources.Resources.startButton
+        Me.startButton.Location = New System.Drawing.Point(497, 458)
+        Me.startButton.Name = "startButton"
+        Me.startButton.Size = New System.Drawing.Size(270, 69)
+        Me.startButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.startButton.TabIndex = 3
+        Me.startButton.TabStop = False
+        '
+        'loadMenu
+        '
+        Me.loadMenu.AutoSize = True
+        Me.loadMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.loadMenu.Location = New System.Drawing.Point(796, 194)
+        Me.loadMenu.Name = "loadMenu"
+        Me.loadMenu.Size = New System.Drawing.Size(81, 25)
+        Me.loadMenu.TabIndex = 10
+        Me.loadMenu.Text = "[LOAD]"
+        '
         'Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1264, 985)
+        Me.Controls.Add(Me.startButton)
         Me.Controls.Add(Me.gameContext)
+        Me.Controls.Add(Me.gameIcon)
         Me.DoubleBuffered = True
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -92,11 +206,23 @@ Partial Class Game
         Me.gameContext.ResumeLayout(False)
         Me.gameContext.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.startButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents gameText As Label
     Friend WithEvents gameContext As Panel
     Friend WithEvents gameName As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents startButton As PictureBox
+    Friend WithEvents titleMenu As Label
+    Friend WithEvents quitMenu As Label
+    Friend WithEvents closeMenu As Label
+    Friend WithEvents gameIcon As PictureBox
+    Friend WithEvents autoMenu As Label
+    Friend WithEvents skipMenu As Label
+    Friend WithEvents saveMenu As Label
+    Friend WithEvents loadMenu As Label
 End Class
