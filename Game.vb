@@ -29,6 +29,7 @@ Public Class Game
 
     End Sub
     Private Sub Start_Init()
+
         CheckForIllegalCrossThreadCalls = False '스레드 체크 해제'
         startButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 50) '버튼 위치조절'
         infoButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 150) '버튼 위치조절'
@@ -131,13 +132,10 @@ Public Class Game
         End If
         Select Case story
             Case 0
-                Portrait(False)
+                setPortrait("김춘배")
                 gText = "김춘배 27세 나는 여느 때와 다르지않게 집에서 쉬고 있었다."
                 textTypingTimer.Start()
             Case 1
-                Portrait(True)
-                gameName.Text = "춘배"
-                gamePortrait.Image = My.Resources.hero
                 gText = "역시 집에서는 컴퓨터하면서 쉬는게 최고라니까..."
                 gameSound.Play("typing")
                 textTypingTimer.Start()
@@ -154,28 +152,51 @@ Public Class Game
                 gText = "후... 존버하면 다시 오를거야... 따흑..."
                 textTypingTimer.Start()
             Case 5
-                Portrait(False)
+                setPortrait("스마트폰")
                 gameSound.Play("vibrate")
                 gText = "(스마트폰 진동음...)"
                 textTypingTimer.Start()
             Case 6
-                Portrait(True)
+                setPortrait("김춘배")
                 gameSound.Stop("vibrate")
-                gText = "어라, 김박사님이 대체 무슨일이시지? 당분간은 쉬라고 하셨는데"
+                gText = "어라, 박사님이 대체 무슨일이시지? 당분간은 쉬라고 하셨는데"
                 textTypingTimer.Start()
             Case 7
-                gText = "여보세요 무슨일이시죠 김박사님?"
+                setPortrait("김박사")
+                gText = "잘지냈는가 춘배"
                 textTypingTimer.Start()
+            Case 8
+                setPortrait("김춘배")
+                gText = "무슨일이시죠 박사님? 당분간은 쉬겠다고 말씀드렸는데..."
+                textTypingTimer.Start()
+            Case 7
+                setPortrait("김박사")
+                gText = "다름아니라 외딴 섬으로 탐사를 떠난 내조수가 돌아오질 않아서 말일세 혹시 좀 알아봐줄 수 있겠나...?"
+                textTypingTimer.Start()
+
         End Select
     End Sub
     Private Sub Portrait(check As Boolean)
         If check = False Then
-            gameName.Hide()
             gamePortrait.Hide()
         Else
-            gameName.Show()
             gamePortrait.Show()
         End If
+    End Sub
+    Private Sub setPortrait(name As String)
+        Select Case name
+            Case "김춘배"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.hero
+            Case "김박사"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.icon
+            Case Else
+                gameName.Text = name
+                Portrait(False)
+        End Select
     End Sub
     Private Sub Text_Typing()
         If gameText.Text.Length = gText.Length Then

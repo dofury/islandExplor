@@ -267,6 +267,7 @@ Partial Class Game
         Me.Controls.Add(Me.gameIcon)
         Me.Controls.Add(Me.infoContext)
         Me.DoubleBuffered = True
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Game"
