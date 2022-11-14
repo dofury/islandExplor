@@ -16,6 +16,9 @@ Public Class Game
     Dim gTextCount As Integer
     Dim loadfiles As String
     Dim loadfile() As String
+    Dim loadTexts As String
+    Dim loadText() As String
+    Dim loadTextCount As Integer
     Dim gameSound As New GameSounds
     Public font_naver As PrivateFontCollection = New PrivateFontCollection()
     Dim tfont_24 As Font
@@ -31,6 +34,7 @@ Public Class Game
     Private Sub Start_Init()
 
         CheckForIllegalCrossThreadCalls = False '스레드 체크 해제'
+        LoadStory()
         startButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 50) '버튼 위치조절'
         infoButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 150) '버튼 위치조절'
         endButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 250) '버튼 위치조절'
@@ -79,6 +83,7 @@ Public Class Game
         endButton.Show()
         stage = 0
         story = 0
+        loadTextCount = 0
         textTimerInterval = 0
         gamePortrait.Image = My.Resources.context
         gameName.Text = ""
@@ -93,11 +98,18 @@ Public Class Game
         End Select
     End Sub
 
+    Private Sub LoadStory() '스토리 원고 로드 함수'
+        loadTexts = My.Computer.FileSystem.ReadAllText("story.txt")
+        loadText = loadTexts.Split(vbCrLf)
+    End Sub
+
     Private Sub SE_Stop()
         gameSound.Stop("tick")
         gameSound.Stop("typing")
         gameSound.Stop("blackCow")
         gameSound.Stop("vibrate")
+        gameSound.Stop("doorBell")
+        gameSound.Stop("writePen")
     End Sub
 
 
@@ -113,6 +125,8 @@ Public Class Game
         gameSound.AddSound("living", "sound/HOW ARE YOU.mp3")
         gameSound.AddSound("blackCow", "sound/Single Cow Sound.mp3")
         gameSound.AddSound("vibrate", "sound/Phone Vibrating Sound.mp3")
+        gameSound.AddSound("doorBell", "sound/Door Bell Sound.mp3")
+        gameSound.AddSound("writePen", "sound/Pencil Write Eng.mp3")
         gameSound.SetVolume("living", 70)
         gameSound.SetVolume("title", 80)
     End Sub
@@ -127,60 +141,58 @@ Public Class Game
 
     End Sub
     Private Sub Story_1()
-        If gameSound.IsPlaying("living") = 0 Then
+
+        setPortrait(loadText(loadTextCount))
+        Story_1_Next()
+        gText = loadText(loadTextCount + 1)
+        textTypingTimer.Start()
+    End Sub
+    Private Sub Story_1_Next()
+        If gameSound.IsPlaying("living") = False Then
             gameSound.Play("living")
         End If
-        Select Case story
+        Select Case story 'story.txt 위치 계산 공식 (story+1)*2
             Case 0
-                setPortrait("김춘배")
-                gText = "김춘배 27세 나는 여느 때와 다르지않게 집에서 쉬고 있었다."
-                textTypingTimer.Start()
+                gamePortrait.BackgroundImage = My.Resources.home
             Case 1
-                gText = "역시 집에서는 컴퓨터하면서 쉬는게 최고라니까..."
-                gameSound.Play("typing")
-                textTypingTimer.Start()
+                If gameSound.IsPlaying("typing") = False Then
+                    gameSound.Play("typing")
+                End If
             Case 2
                 gameSound.Stop("typing")
-                gText = "어디보자 주식은 좀 올랐나 볼까...?"
-                textTypingTimer.Start()
             Case 3
-                gameSound.Play("blackCow")
-                gText = "아니 카카오 주가 왜이래...? 도대체 무슨 일이 있었던거야???"
-                textTypingTimer.Start()
+                If gameSound.IsPlaying("blackCow") = False Then
+                    gameSound.Play("blackCow")
+                End If
             Case 4
                 gameSound.Stop("blackCow")
-                gText = "후... 존버하면 다시 오를거야... 따흑..."
-                textTypingTimer.Start()
             Case 5
-                setPortrait("스마트폰")
-                gameSound.Play("vibrate")
-                gText = "(스마트폰 진동음...)"
-                textTypingTimer.Start()
+                If gameSound.IsPlaying("vibrate") = False Then
+                    gameSound.Play("vibrate")
+                End If
             Case 6
-                setPortrait("김춘배")
                 gameSound.Stop("vibrate")
-                gText = "어라, 박사님이 대체 무슨일이시지? 당분간은 쉬라고 하셨는데"
-                textTypingTimer.Start()
-            Case 7
-                setPortrait("김박사")
-                gText = "잘지냈는가 춘배"
-                textTypingTimer.Start()
-            Case 8
-                setPortrait("김춘배")
-                gText = "무슨일이시죠 박사님? 당분간은 쉬겠다고 말씀드렸는데..."
-                textTypingTimer.Start()
-            Case 7
-                setPortrait("김박사")
-                gText = "다름아니라 외딴 섬으로 탐사를 떠난 내조수가 돌아오질 않아서 말일세 혹시 좀 알아봐줄 수 있겠나...?"
-                textTypingTimer.Start()
-
+            Case 19
+                If gameSound.IsPlaying("doorBell") = False Then
+                    gameSound.Play("doorBell")
+                End If
+            Case 20
+                gameSound.Stop("doorBell")
+            Case 24
+                If gameSound.IsPlaying("writePen") = False Then
+                    gameSound.Play("writePen")
+                End If
+            Case 25
+                gameSound.Stop("writePen")
         End Select
     End Sub
     Private Sub Portrait(check As Boolean)
         If check = False Then
             gamePortrait.Hide()
+            gameName.Hide()
         Else
             gamePortrait.Show()
+            gameName.Show()
         End If
     End Sub
     Private Sub setPortrait(name As String)
@@ -189,28 +201,45 @@ Public Class Game
                 Portrait(True)
                 gameName.Text = name
                 gamePortrait.Image = My.Resources.hero
-            Case "김박사"
+            Case "이박사"
                 Portrait(True)
                 gameName.Text = name
-                gamePortrait.Image = My.Resources.icon
-            Case Else
+                gamePortrait.Image = My.Resources.doctor_lee
+            Case "집배원"
+                Portrait(True)
                 gameName.Text = name
+                gamePortrait.Image = My.Resources.doctor_lee
+            Case Else
                 Portrait(False)
         End Select
     End Sub
     Private Sub Text_Typing()
-        If gameText.Text.Length = gText.Length Then
-            gTextCount = 0
-            textTypingTimer.Enabled = False
-            Exit Sub
-        End If
-        gameText.Text = gText.Substring(0, gTextCount)
-        gTextCount += 1
+        Try
+            Me.Invoke(New deleTextBox(AddressOf allocTextBox), gText) '크로스쓰레드 문제 해결
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Delegate Sub delePictureBox(ByVal image As PictureBox) '델리게이트 선언
+    Private Sub allocPictureBox(ByVal image As PictureBox)
+
     End Sub
 
+    Delegate Sub deleTextBox(ByVal text As String) '델리게이트 선언
+    Private Sub allocTextBox(ByVal text As String) '델리게이트 함수선언
+        If gameText.Text.Length = text.Length Then
+            gTextCount = 0
+            textTypingTimer.Stop()
+            Exit Sub
+        End If
+
+        If gTextCount < text.Length Then
+            gTextCount += 1
+        End If
+        gameText.Text = text.Substring(0, gTextCount)
+    End Sub
 
     Private Sub gameContext_Click(sender As Object, e As EventArgs) Handles gameContext.Click
-        textTypingTimer.Stop()
         gameText_Check()
         Game_Next()
     End Sub
@@ -230,7 +259,6 @@ Public Class Game
     End Sub
 
     Private Sub gameText_Click(sender As Object, e As EventArgs) Handles gameText.Click
-        textTypingTimer.Stop()
         gameText_Check()
         Game_Next()
     End Sub
@@ -239,12 +267,16 @@ Public Class Game
         If Not gameText.Text = gText Then '게임 텍스트와 실제 보여지는 텍스트가 다르면 바로보여주는 함수
             gameText.Text = gText
         Else
-            story += 1
+            If loadTextCount < (loadText.Length - 2) Then
+                story += 1
+                loadTextCount += 2
+            End If
         End If
+
     End Sub
 
     Private Sub Game_Next() '다음 게임 텍스트로 넘어가는 함수
-        SE_Stop()
+        'SE_Stop()
         gameSound.Play("tick")
         Select Case stage
             Case 1
@@ -318,6 +350,7 @@ Public Class Game
         textTypingTimer.Stop()
         gameText.Text = gText
         story += 1
+        loadTextCount += 2
         Game_Next()
     End Sub
 
@@ -372,6 +405,8 @@ Public Class Game
         My.Computer.FileSystem.WriteAllText("save.txt", stage, False)
         My.Computer.FileSystem.WriteAllText("save.txt", token, True)
         My.Computer.FileSystem.WriteAllText("save.txt", story, True)
+        My.Computer.FileSystem.WriteAllText("save.txt", token, True)
+        My.Computer.FileSystem.WriteAllText("save.txt", loadTextCount, True)
     End Sub
 
     Private Sub saveMenu_MouseHover(sender As Object, e As EventArgs) Handles saveMenu.MouseHover
@@ -388,6 +423,7 @@ Public Class Game
         loadfile = loadfiles.Split("/")
         stage = loadfile(0)
         story = loadfile(1)
+        loadTextCount = loadfile(2)
         Invalidate()
         Game_Next()
 

@@ -55,7 +55,7 @@ Partial Class Game
         '
         Me.gameText.BackColor = System.Drawing.Color.Transparent
         Me.gameText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.gameText.Location = New System.Drawing.Point(223, 41)
+        Me.gameText.Location = New System.Drawing.Point(223, 57)
         Me.gameText.Margin = New System.Windows.Forms.Padding(0)
         Me.gameText.Name = "gameText"
         Me.gameText.Size = New System.Drawing.Size(947, 132)
@@ -77,9 +77,9 @@ Partial Class Game
         Me.gameContext.Controls.Add(Me.gameName)
         Me.gameContext.Controls.Add(Me.gamePortrait)
         Me.gameContext.Controls.Add(Me.gameText)
-        Me.gameContext.Location = New System.Drawing.Point(1, 758)
+        Me.gameContext.Location = New System.Drawing.Point(1, 735)
         Me.gameContext.Name = "gameContext"
-        Me.gameContext.Size = New System.Drawing.Size(1263, 226)
+        Me.gameContext.Size = New System.Drawing.Size(1263, 250)
         Me.gameContext.TabIndex = 2
         '
         'loadMenu
@@ -156,18 +156,21 @@ Partial Class Game
         '
         Me.gameName.BackColor = System.Drawing.Color.Transparent
         Me.gameName.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.gameName.Location = New System.Drawing.Point(36, 176)
+        Me.gameName.Location = New System.Drawing.Point(37, 187)
         Me.gameName.Margin = New System.Windows.Forms.Padding(0)
         Me.gameName.Name = "gameName"
-        Me.gameName.Size = New System.Drawing.Size(150, 43)
+        Me.gameName.Size = New System.Drawing.Size(122, 43)
         Me.gameName.TabIndex = 3
         Me.gameName.Text = "이름"
         Me.gameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'gamePortrait
         '
+        Me.gamePortrait.BackgroundImage = Global.islandExploration.My.Resources.Resources.title
+        Me.gamePortrait.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.gamePortrait.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.gamePortrait.Image = CType(resources.GetObject("gamePortrait.Image"), System.Drawing.Image)
-        Me.gamePortrait.Location = New System.Drawing.Point(49, 23)
+        Me.gamePortrait.Location = New System.Drawing.Point(37, 39)
         Me.gamePortrait.Name = "gamePortrait"
         Me.gamePortrait.Size = New System.Drawing.Size(122, 150)
         Me.gamePortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -178,7 +181,7 @@ Partial Class Game
         '
         Me.gameIcon.BackColor = System.Drawing.Color.Transparent
         Me.gameIcon.Image = Global.islandExploration.My.Resources.Resources.icon
-        Me.gameIcon.Location = New System.Drawing.Point(1210, 698)
+        Me.gameIcon.Location = New System.Drawing.Point(1210, 677)
         Me.gameIcon.Name = "gameIcon"
         Me.gameIcon.Size = New System.Drawing.Size(54, 54)
         Me.gameIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
