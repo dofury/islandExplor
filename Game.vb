@@ -126,7 +126,7 @@ Public Class Game
         gameSound.AddSound("blackCow", "sound/Single Cow Sound.mp3")
         gameSound.AddSound("vibrate", "sound/Phone Vibrating Sound.mp3")
         gameSound.AddSound("doorBell", "sound/Door Bell Sound.mp3")
-        gameSound.AddSound("writePen", "sound/Pencil Write Eng.mp3")
+        gameSound.AddSound("writePen", "sound/Pencil Write Kor.wav")
         gameSound.SetVolume("living", 70)
         gameSound.SetVolume("title", 80)
     End Sub
@@ -208,7 +208,7 @@ Public Class Game
             Case "집배원"
                 Portrait(True)
                 gameName.Text = name
-                gamePortrait.Image = My.Resources.doctor_lee
+                gamePortrait.Image = My.Resources.postman
             Case Else
                 Portrait(False)
         End Select
@@ -419,6 +419,7 @@ Public Class Game
 
     Private Sub loadMenu_Click(sender As Object, e As EventArgs) Handles loadMenu.Click
         gameSound.Play("tick")
+        SE_Stop()
         loadfiles = My.Computer.FileSystem.ReadAllText("save.txt")
         loadfile = loadfiles.Split("/")
         stage = loadfile(0)
