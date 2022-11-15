@@ -184,6 +184,9 @@ Public Class Game
                 End If
             Case 25
                 gameSound.Stop("writePen")
+            Case 31
+                playContext.Show()
+                gameContext.Hide()
         End Select
     End Sub
     Private Sub Portrait(check As Boolean)
