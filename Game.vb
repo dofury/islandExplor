@@ -1,28 +1,41 @@
 ﻿Imports System.Drawing.Text
+Imports System.IO.Compression
 Imports System.Net.Security
 
 Public Class Game
     Dim titleImage As Image
     Dim homeImage As Image
     Dim island As Image
+    Dim quizImage As Image
+
     Dim stage As Integer
     Dim story As Integer
+    Dim quizNumber As Integer
+
     Dim autoCheck As Boolean = False
     Dim skipCheck As Boolean = False
+
     Private textTimer As System.Timers.Timer
     Private textTypingTimer As System.Timers.Timer
-    Private textTimerInterval As Integer = 50
+    Private systemTimer As System.Timers.Timer
+    Private systemTimerType As String
+    Private timerInterval As Integer = 50
+
     Dim gText As String
     Dim gTextCount As Integer
+
     Dim loadfiles As String
     Dim loadfile() As String
     Dim loadTexts As String
     Dim loadText() As String
     Dim loadTextCount As Integer
+
     Dim gameSound As New GameSounds
+
     Public font_naver As PrivateFontCollection = New PrivateFontCollection()
     Dim tfont_24 As Font
     Dim tfont_16 As Font
+
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Start_Init()
         Init()
@@ -36,15 +49,27 @@ Public Class Game
         startButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 50) '버튼 위치조절'
         infoButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 150) '버튼 위치조절'
         endButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 250) '버튼 위치조절'
+
         infoContext.Height = Me.Height
         infoContext.Location = New Point(0, 0)
-        playContext.Height = Me.Height / 5 * 4
-        playContext.Width = Me.Width / 5 * 4
-        playContext.Location = New Point(Me.Width / 10, Me.Height / 10)
-        playText.Location += New Point(0, 100)
+
+        playContext.Location = New Point(0, 0)
+        playContext.Width = My.Resources.playContext.Width + 200
+        playContext.Height = My.Resources.playContext.Height + 200
+        playContext.Location = New Point(Me.Width / 2 - playContext.Width / 2, Me.Height / 2 - playContext.Height / 2)
+
         playText.Width = playContext.Width
+        playText.Location = New Point(0, 350)
+
         playTextInput.Width = playContext.Width / 4
-        playTextInput.Location = New Point(playContext.Width / 2 - playTextInput.Width / 2, 500)
+        playTextInput.Location = New Point(playContext.Width / 2 - playTextInput.Width / 2, 700)
+
+        hintButton.Location = New Point(playTextInput.Location.X - hintButton.Width - 10, playTextInput.Location.Y - (hintButton.Height / 2 - playTextInput.Height / 2))
+        checkButton.Location = New Point(playTextInput.Location.X + playTextInput.Width + 10, hintButton.Location.Y)
+
+        quizCheck.Location = New Point(playTextInput.Location.X + (playTextInput.Width / 2 - quizCheck.Width / 2), playTextInput.Location.Y - quizCheck.Height - 10)
+        quizCheck.Text = ""
+
         playText.Text = "동물원에는 여러 동물이 있다." + vbCrLf +
 "그 중 뱀, 토끼, 늑대는 같은 우리에서 살고 있다.
 뱀은 10마리가 있고 3일마다 한마리 씩 늘어난다, 
@@ -54,12 +79,20 @@ Public Class Game
 30일후에 모든 동물의 다리 갯수는 몇개일까?
 "
         gameIcon.Location = New Point(Me.Size.Width - gameIcon.Width - 20, Me.Size.Height - gameIcon.Height - 40)
-        textTimer = New Timers.Timer(textTimerInterval)
+
+        textTimer = New Timers.Timer(timerInterval)
         textTimer.AutoReset = True
         AddHandler textTimer.Elapsed, AddressOf autoSkipMenu_On
-        textTypingTimer = New Timers.Timer(textTimerInterval)
+
+        textTypingTimer = New Timers.Timer(timerInterval)
         textTypingTimer.AutoReset = True
         AddHandler textTypingTimer.Elapsed, AddressOf Text_Typing
+
+        systemTimer = New Timers.Timer(timerInterval)
+        systemTimer.Interval = 1500
+        systemTimer.AutoReset = True
+        AddHandler systemTimer.Elapsed, AddressOf systemTimer_On
+
         Image_Load()
         Sound_Load()
         font_naver.AddFontFile("font/MaruBuri-Regular.ttf")
@@ -96,10 +129,12 @@ Public Class Game
         endButton.Show()
         stage = 0
         story = 0
+        quizNumber = 0
         loadTextCount = 0
-        textTimerInterval = 0
+        timerInterval = 0
         gamePortrait.Image = My.Resources.context
         gameName.Text = ""
+        playTextInput.Text = ""
         gameSound.Play("title")
     End Sub
     Private Sub BGM_Stop()
@@ -123,6 +158,10 @@ Public Class Game
         gameSound.Stop("vibrate")
         gameSound.Stop("doorBell")
         gameSound.Stop("writePen")
+        gameSound.Stop("phoneEnd")
+        gameSound.Stop("correct")
+        gameSound.Stop("incorrect")
+        gameSound.Stop("pop")
     End Sub
 
 
@@ -130,6 +169,7 @@ Public Class Game
         titleImage = My.Resources.title
         homeImage = My.Resources.home
         island = My.Resources.title
+        quizImage = My.Resources.quiz1
     End Sub
     Private Sub Sound_Load()
         gameSound.AddSound("title", "sound/Adventure Starting.mp3")
@@ -141,6 +181,9 @@ Public Class Game
         gameSound.AddSound("doorBell", "sound/Door Bell Sound.mp3")
         gameSound.AddSound("writePen", "sound/Pencil Write Kor.wav")
         gameSound.AddSound("phoneEnd", "sound/Phone Dialing With Dialtone Sound.wav")
+        gameSound.AddSound("correct", "sound/Correct.mp3")
+        gameSound.AddSound("incorrect", "sound/Error.mp3")
+        gameSound.AddSound("pop", "sound/Blop Sound.mp3")
         gameSound.SetVolume("living", 70)
         gameSound.SetVolume("title", 80)
     End Sub
@@ -205,6 +248,7 @@ Public Class Game
             Case 25
                 gameSound.Stop("writePen")
             Case 31
+                quizNumber += 1
                 playContext.Show()
                 gameContext.Hide()
         End Select
@@ -238,18 +282,14 @@ Public Class Game
     End Sub
     Private Sub Text_Typing()
         Try
-            Me.Invoke(New deleTextBox(AddressOf allocTextBox), gText) '크로스쓰레드 문제 해결
+            Me.Invoke(New deleText(AddressOf allocText), gText) '크로스쓰레드 문제 해결
         Catch ex As Exception
 
         End Try
     End Sub
-    Delegate Sub delePictureBox(ByVal image As PictureBox) '델리게이트 선언
-    Private Sub allocPictureBox(ByVal image As PictureBox)
 
-    End Sub
-
-    Delegate Sub deleTextBox(ByVal text As String) '델리게이트 선언
-    Private Sub allocTextBox(ByVal text As String) '델리게이트 함수선언
+    Delegate Sub deleText(ByVal text As String) '델리게이트 선언
+    Private Sub allocText(ByVal text As String) '델리게이트 함수선언
         If gameText.Text.Length = text.Length Then
             gTextCount = 0
             textTypingTimer.Stop()
@@ -260,6 +300,12 @@ Public Class Game
             gTextCount += 1
         End If
         gameText.Text = text.Substring(0, gTextCount)
+    End Sub
+
+    Delegate Sub deleLabel(label As Label) '델리게이트 선언
+    Private Sub allocLabel(label As Label) '델리게이트 함수선언
+        label.Text = ""
+        systemTimer.Stop()
     End Sub
 
     Private Sub gameContext_Click(sender As Object, e As EventArgs) Handles gameContext.Click
@@ -315,6 +361,7 @@ Public Class Game
 
     Private Sub titleMenu_MouseHover(sender As Object, e As EventArgs) Handles titleMenu.MouseHover
         titleMenu.ForeColor = Color.Red
+        Object_MouseHover()
     End Sub
 
     Private Sub titleMenu_MouseLeave(sender As Object, e As EventArgs) Handles titleMenu.MouseLeave
@@ -332,6 +379,7 @@ Public Class Game
 
     Private Sub quitMenu_MouseHover(sender As Object, e As EventArgs) Handles quitMenu.MouseHover
         quitMenu.ForeColor = Color.Red
+        Object_MouseHover()
     End Sub
 
     Private Sub closeMenu_Click(sender As Object, e As EventArgs) Handles closeMenu.Click
@@ -348,6 +396,7 @@ Public Class Game
 
     Private Sub closeMenu_MouseHover(sender As Object, e As EventArgs) Handles closeMenu.MouseHover
         closeMenu.ForeColor = Color.Red
+        Object_MouseHover()
     End Sub
 
     Private Sub closeMenu_MouseLeave(sender As Object, e As EventArgs) Handles closeMenu.MouseLeave
@@ -378,6 +427,7 @@ Public Class Game
     End Sub
 
     Private Sub autoMenu_MouseHover(sender As Object, e As EventArgs) Handles autoMenu.MouseHover
+        Object_MouseHover()
         If autoCheck = True Then
             autoMenu.ForeColor = Color.Black
         Else
@@ -407,6 +457,7 @@ Public Class Game
     End Sub
 
     Private Sub skipMenu_MouseHover(sender As Object, e As EventArgs) Handles skipMenu.MouseHover
+        Object_MouseHover()
         If skipCheck = True Then
             skipMenu.ForeColor = Color.Black
         Else
@@ -434,6 +485,7 @@ Public Class Game
 
     Private Sub saveMenu_MouseHover(sender As Object, e As EventArgs) Handles saveMenu.MouseHover
         saveMenu.ForeColor = Color.Red
+        Object_MouseHover()
     End Sub
 
     Private Sub saveMenu_MouseLeave(sender As Object, e As EventArgs) Handles saveMenu.MouseLeave
@@ -449,12 +501,14 @@ Public Class Game
         story = loadfile(1)
         loadTextCount = loadfile(2)
         Invalidate()
+        gameText_Check()
         Game_Next()
 
     End Sub
 
     Private Sub loadMenu_MouseHover(sender As Object, e As EventArgs) Handles loadMenu.MouseHover
         loadMenu.ForeColor = Color.Red
+        Object_MouseHover()
     End Sub
 
     Private Sub loadMenu_MouseLeave(sender As Object, e As EventArgs) Handles loadMenu.MouseLeave
@@ -502,10 +556,70 @@ Public Class Game
         CType(sender, Label).Height = MeasuredSize.Height
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         If playTextInput.Text = "" Then
             playContext.Hide()
             gameContext.Show()
         End If
+    End Sub
+
+    Private Sub playContext_Paint(sender As Object, e As PaintEventArgs) Handles playContext.Paint
+        Dim quizImageWidth As Integer = (playContext.Width / 2) - (quizImage.Width / 2) - 100
+        Select Case quizNumber
+            Case 1
+                e.Graphics.DrawImage(quizImage, quizImageWidth, 50)
+        End Select
+    End Sub
+
+    Private Sub checkButton_Click(sender As Object, e As EventArgs) Handles checkButton.Click '정답 버튼'
+        Select Case quizNumber
+            Case 1
+                Try
+                    If playTextInput.Text = 0 Then
+                        gameSound.Play("correct")
+                        quizCheck.ForeColor = Color.Green
+                        quizCheck.Text = "정답"
+                        systemTimerType = "quizCheck1"
+                        systemTimer.Start()
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    gameSound.Play("incorrect")
+                    quizCheck.ForeColor = Color.Red
+                    quizCheck.Text = "오답"
+                    systemTimerType = "quizCheck2"
+                    systemTimer.Start()
+
+                End Try
+        End Select
+
+    End Sub
+
+    Private Sub systemTimer_On()
+        Select Case systemTimerType
+            Case "quizCheck1"
+                Me.Invoke(New deleLabel(AddressOf allocLabel), quizCheck) '크로스쓰레드 문제 해결
+                playContext.Hide()
+                gameContext.Show()
+            Case "quizCheck2"
+                Me.Invoke(New deleLabel(AddressOf allocLabel), quizCheck) '크로스쓰레드 문제 해결
+        End Select
+    End Sub
+
+    Private Sub hintButton_Click(sender As Object, e As EventArgs) Handles hintButton.Click
+
+    End Sub
+
+    Private Sub checkButton_MouseHover(sender As Object, e As EventArgs) Handles checkButton.MouseHover
+        Object_MouseHover()
+    End Sub
+
+    Private Sub hintButton_MouseHover(sender As Object, e As EventArgs) Handles hintButton.MouseHover
+        Object_MouseHover()
+    End Sub
+
+    Private Sub Object_MouseHover()
+        gameSound.Play("pop")
     End Sub
 End Class
