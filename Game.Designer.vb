@@ -41,10 +41,6 @@ Partial Class Game
         Me.infoContext = New System.Windows.Forms.Panel()
         Me.infoText = New System.Windows.Forms.Label()
         Me.xButton = New System.Windows.Forms.PictureBox()
-        Me.playContext = New System.Windows.Forms.Panel()
-        Me.playTextInput = New System.Windows.Forms.TextBox()
-        Me.playText = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -53,7 +49,6 @@ Partial Class Game
         CType(Me.endButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.infoContext.SuspendLayout()
         CType(Me.xButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.playContext.SuspendLayout()
         Me.SuspendLayout()
         '
         'gameText
@@ -246,7 +241,7 @@ Partial Class Game
         'infoText
         '
         Me.infoText.AutoSize = True
-        Me.infoText.Location = New System.Drawing.Point(37, 27)
+        Me.infoText.Location = New System.Drawing.Point(36, 68)
         Me.infoText.Name = "infoText"
         Me.infoText.Size = New System.Drawing.Size(43, 15)
         Me.infoText.TabIndex = 1
@@ -262,58 +257,12 @@ Partial Class Game
         Me.xButton.TabIndex = 0
         Me.xButton.TabStop = False
         '
-        'playContext
-        '
-        Me.playContext.BackColor = System.Drawing.Color.Transparent
-        Me.playContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.context
-        Me.playContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.playContext.Controls.Add(Me.Button1)
-        Me.playContext.Controls.Add(Me.playTextInput)
-        Me.playContext.Controls.Add(Me.playText)
-        Me.playContext.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.playContext.Location = New System.Drawing.Point(1, 139)
-        Me.playContext.Name = "playContext"
-        Me.playContext.Size = New System.Drawing.Size(1263, 147)
-        Me.playContext.TabIndex = 10
-        Me.playContext.Visible = False
-        '
-        'playTextInput
-        '
-        Me.playTextInput.Location = New System.Drawing.Point(151, 72)
-        Me.playTextInput.Name = "playTextInput"
-        Me.playTextInput.Size = New System.Drawing.Size(100, 23)
-        Me.playTextInput.TabIndex = 12
-        Me.playTextInput.Text = "메세지"
-        Me.playTextInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'playText
-        '
-        Me.playText.BackColor = System.Drawing.Color.Transparent
-        Me.playText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.playText.Location = New System.Drawing.Point(8, 54)
-        Me.playText.Margin = New System.Windows.Forms.Padding(0)
-        Me.playText.Name = "playText"
-        Me.playText.Size = New System.Drawing.Size(102, 41)
-        Me.playText.TabIndex = 11
-        Me.playText.Text = "메세지"
-        Me.playText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(418, 78)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 13
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1264, 985)
-        Me.Controls.Add(Me.playContext)
         Me.Controls.Add(Me.endButton)
         Me.Controls.Add(Me.infoButton)
         Me.Controls.Add(Me.startButton)
@@ -335,8 +284,6 @@ Partial Class Game
         Me.infoContext.ResumeLayout(False)
         Me.infoContext.PerformLayout()
         CType(Me.xButton, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.playContext.ResumeLayout(False)
-        Me.playContext.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -359,8 +306,4 @@ Partial Class Game
     Friend WithEvents infoContext As Panel
     Friend WithEvents xButton As PictureBox
     Friend WithEvents infoText As Label
-    Friend WithEvents playContext As Panel
-    Friend WithEvents playText As Label
-    Friend WithEvents playTextInput As TextBox
-    Friend WithEvents Button1 As Button
 End Class
