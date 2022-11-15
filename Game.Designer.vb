@@ -42,9 +42,9 @@ Partial Class Game
         Me.infoText = New System.Windows.Forms.Label()
         Me.xButton = New System.Windows.Forms.PictureBox()
         Me.playContext = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.playTextInput = New System.Windows.Forms.TextBox()
         Me.playText = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,10 +60,10 @@ Partial Class Game
         '
         Me.gameText.BackColor = System.Drawing.Color.Transparent
         Me.gameText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.gameText.Location = New System.Drawing.Point(446, 122)
+        Me.gameText.Location = New System.Drawing.Point(223, 57)
         Me.gameText.Margin = New System.Windows.Forms.Padding(0)
         Me.gameText.Name = "gameText"
-        Me.gameText.Size = New System.Drawing.Size(1894, 282)
+        Me.gameText.Size = New System.Drawing.Size(947, 132)
         Me.gameText.TabIndex = 1
         Me.gameText.Text = "메세지"
         '
@@ -82,18 +82,16 @@ Partial Class Game
         Me.gameContext.Controls.Add(Me.gameName)
         Me.gameContext.Controls.Add(Me.gamePortrait)
         Me.gameContext.Controls.Add(Me.gameText)
-        Me.gameContext.Location = New System.Drawing.Point(2, 1568)
-        Me.gameContext.Margin = New System.Windows.Forms.Padding(6)
+        Me.gameContext.Location = New System.Drawing.Point(1, 735)
         Me.gameContext.Name = "gameContext"
-        Me.gameContext.Size = New System.Drawing.Size(2526, 533)
+        Me.gameContext.Size = New System.Drawing.Size(1263, 250)
         Me.gameContext.TabIndex = 2
         '
         'loadMenu
         '
         Me.loadMenu.AutoSize = True
         Me.loadMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.loadMenu.Location = New System.Drawing.Point(1592, 414)
-        Me.loadMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.loadMenu.Location = New System.Drawing.Point(796, 194)
         Me.loadMenu.Name = "loadMenu"
         Me.loadMenu.Size = New System.Drawing.Size(81, 25)
         Me.loadMenu.TabIndex = 10
@@ -103,8 +101,7 @@ Partial Class Game
         '
         Me.saveMenu.AutoSize = True
         Me.saveMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.saveMenu.Location = New System.Drawing.Point(1454, 414)
-        Me.saveMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.saveMenu.Location = New System.Drawing.Point(727, 194)
         Me.saveMenu.Name = "saveMenu"
         Me.saveMenu.Size = New System.Drawing.Size(74, 25)
         Me.saveMenu.TabIndex = 9
@@ -114,8 +111,7 @@ Partial Class Game
         '
         Me.skipMenu.AutoSize = True
         Me.skipMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.skipMenu.Location = New System.Drawing.Point(1748, 414)
-        Me.skipMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.skipMenu.Location = New System.Drawing.Point(874, 194)
         Me.skipMenu.Name = "skipMenu"
         Me.skipMenu.Size = New System.Drawing.Size(68, 25)
         Me.skipMenu.TabIndex = 8
@@ -125,8 +121,7 @@ Partial Class Game
         '
         Me.autoMenu.AutoSize = True
         Me.autoMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.autoMenu.Location = New System.Drawing.Point(1872, 414)
-        Me.autoMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.autoMenu.Location = New System.Drawing.Point(936, 194)
         Me.autoMenu.Name = "autoMenu"
         Me.autoMenu.Size = New System.Drawing.Size(80, 25)
         Me.autoMenu.TabIndex = 7
@@ -136,8 +131,7 @@ Partial Class Game
         '
         Me.closeMenu.AutoSize = True
         Me.closeMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.closeMenu.Location = New System.Drawing.Point(2024, 414)
-        Me.closeMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.closeMenu.Location = New System.Drawing.Point(1012, 194)
         Me.closeMenu.Name = "closeMenu"
         Me.closeMenu.Size = New System.Drawing.Size(87, 25)
         Me.closeMenu.TabIndex = 6
@@ -147,8 +141,7 @@ Partial Class Game
         '
         Me.quitMenu.AutoSize = True
         Me.quitMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.quitMenu.Location = New System.Drawing.Point(2332, 414)
-        Me.quitMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.quitMenu.Location = New System.Drawing.Point(1166, 194)
         Me.quitMenu.Name = "quitMenu"
         Me.quitMenu.Size = New System.Drawing.Size(74, 25)
         Me.quitMenu.TabIndex = 5
@@ -158,8 +151,7 @@ Partial Class Game
         '
         Me.titleMenu.AutoSize = True
         Me.titleMenu.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.titleMenu.Location = New System.Drawing.Point(2190, 414)
-        Me.titleMenu.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.titleMenu.Location = New System.Drawing.Point(1095, 194)
         Me.titleMenu.Name = "titleMenu"
         Me.titleMenu.Size = New System.Drawing.Size(75, 25)
         Me.titleMenu.TabIndex = 4
@@ -169,10 +161,10 @@ Partial Class Game
         '
         Me.gameName.BackColor = System.Drawing.Color.Transparent
         Me.gameName.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
-        Me.gameName.Location = New System.Drawing.Point(74, 399)
+        Me.gameName.Location = New System.Drawing.Point(37, 187)
         Me.gameName.Margin = New System.Windows.Forms.Padding(0)
         Me.gameName.Name = "gameName"
-        Me.gameName.Size = New System.Drawing.Size(244, 92)
+        Me.gameName.Size = New System.Drawing.Size(122, 43)
         Me.gameName.TabIndex = 3
         Me.gameName.Text = "이름"
         Me.gameName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -183,10 +175,9 @@ Partial Class Game
         Me.gamePortrait.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.gamePortrait.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.gamePortrait.Image = CType(resources.GetObject("gamePortrait.Image"), System.Drawing.Image)
-        Me.gamePortrait.Location = New System.Drawing.Point(74, 83)
-        Me.gamePortrait.Margin = New System.Windows.Forms.Padding(6)
+        Me.gamePortrait.Location = New System.Drawing.Point(37, 39)
         Me.gamePortrait.Name = "gamePortrait"
-        Me.gamePortrait.Size = New System.Drawing.Size(242, 318)
+        Me.gamePortrait.Size = New System.Drawing.Size(122, 150)
         Me.gamePortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.gamePortrait.TabIndex = 2
         Me.gamePortrait.TabStop = False
@@ -195,8 +186,7 @@ Partial Class Game
         '
         Me.gameIcon.BackColor = System.Drawing.Color.Transparent
         Me.gameIcon.Image = Global.islandExploration.My.Resources.Resources.icon
-        Me.gameIcon.Location = New System.Drawing.Point(2420, 1444)
-        Me.gameIcon.Margin = New System.Windows.Forms.Padding(6)
+        Me.gameIcon.Location = New System.Drawing.Point(1210, 677)
         Me.gameIcon.Name = "gameIcon"
         Me.gameIcon.Size = New System.Drawing.Size(54, 54)
         Me.gameIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -209,8 +199,7 @@ Partial Class Game
         Me.startButton.BackColor = System.Drawing.Color.Transparent
         Me.startButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.startButton.Image = Global.islandExploration.My.Resources.Resources.startButton
-        Me.startButton.Location = New System.Drawing.Point(996, 817)
-        Me.startButton.Margin = New System.Windows.Forms.Padding(6)
+        Me.startButton.Location = New System.Drawing.Point(498, 383)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(270, 69)
         Me.startButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -222,8 +211,7 @@ Partial Class Game
         Me.infoButton.BackColor = System.Drawing.Color.Transparent
         Me.infoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.infoButton.Image = Global.islandExploration.My.Resources.Resources.infoButton
-        Me.infoButton.Location = New System.Drawing.Point(994, 977)
-        Me.infoButton.Margin = New System.Windows.Forms.Padding(6)
+        Me.infoButton.Location = New System.Drawing.Point(497, 458)
         Me.infoButton.Name = "infoButton"
         Me.infoButton.Size = New System.Drawing.Size(270, 69)
         Me.infoButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -235,8 +223,7 @@ Partial Class Game
         Me.endButton.BackColor = System.Drawing.Color.Transparent
         Me.endButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.endButton.Image = Global.islandExploration.My.Resources.Resources.endButton
-        Me.endButton.Location = New System.Drawing.Point(996, 1137)
-        Me.endButton.Margin = New System.Windows.Forms.Padding(6)
+        Me.endButton.Location = New System.Drawing.Point(498, 533)
         Me.endButton.Name = "endButton"
         Me.endButton.Size = New System.Drawing.Size(270, 69)
         Me.endButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -250,28 +237,25 @@ Partial Class Game
         Me.infoContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.infoContext.Controls.Add(Me.infoText)
         Me.infoContext.Controls.Add(Me.xButton)
-        Me.infoContext.Location = New System.Drawing.Point(2, 4)
-        Me.infoContext.Margin = New System.Windows.Forms.Padding(6)
+        Me.infoContext.Location = New System.Drawing.Point(1, 2)
         Me.infoContext.Name = "infoContext"
-        Me.infoContext.Size = New System.Drawing.Size(2526, 279)
+        Me.infoContext.Size = New System.Drawing.Size(1263, 131)
         Me.infoContext.TabIndex = 9
         Me.infoContext.Visible = False
         '
         'infoText
         '
         Me.infoText.AutoSize = True
-        Me.infoText.Location = New System.Drawing.Point(74, 58)
-        Me.infoText.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.infoText.Location = New System.Drawing.Point(37, 27)
         Me.infoText.Name = "infoText"
-        Me.infoText.Size = New System.Drawing.Size(86, 32)
+        Me.infoText.Size = New System.Drawing.Size(43, 15)
         Me.infoText.TabIndex = 1
         Me.infoText.Text = "메세지"
         '
         'xButton
         '
         Me.xButton.Image = Global.islandExploration.My.Resources.Resources.xButton
-        Me.xButton.Location = New System.Drawing.Point(2404, 0)
-        Me.xButton.Margin = New System.Windows.Forms.Padding(6)
+        Me.xButton.Location = New System.Drawing.Point(1202, 0)
         Me.xButton.Name = "xButton"
         Me.xButton.Size = New System.Drawing.Size(61, 61)
         Me.xButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -286,33 +270,18 @@ Partial Class Game
         Me.playContext.Controls.Add(Me.Button1)
         Me.playContext.Controls.Add(Me.playTextInput)
         Me.playContext.Controls.Add(Me.playText)
-        Me.playContext.Font = New System.Drawing.Font("맑은 고딕", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.playContext.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.playContext.Location = New System.Drawing.Point(2, 297)
-        Me.playContext.Margin = New System.Windows.Forms.Padding(6)
+        Me.playContext.Location = New System.Drawing.Point(1, 139)
         Me.playContext.Name = "playContext"
-        Me.playContext.Size = New System.Drawing.Size(2526, 314)
+        Me.playContext.Size = New System.Drawing.Size(1263, 147)
         Me.playContext.TabIndex = 10
         Me.playContext.Visible = False
         '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(836, 166)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(6)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(150, 49)
-        Me.Button1.TabIndex = 13
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'playTextInput
         '
-        Me.playTextInput.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.playTextInput.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.playTextInput.Location = New System.Drawing.Point(302, 154)
-        Me.playTextInput.Margin = New System.Windows.Forms.Padding(6)
+        Me.playTextInput.Location = New System.Drawing.Point(151, 72)
         Me.playTextInput.Name = "playTextInput"
-        Me.playTextInput.Size = New System.Drawing.Size(200, 16)
+        Me.playTextInput.Size = New System.Drawing.Size(100, 23)
         Me.playTextInput.TabIndex = 12
         Me.playTextInput.Text = "메세지"
         Me.playTextInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -321,20 +290,29 @@ Partial Class Game
         '
         Me.playText.BackColor = System.Drawing.Color.Transparent
         Me.playText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.playText.Location = New System.Drawing.Point(16, 115)
+        Me.playText.Location = New System.Drawing.Point(8, 54)
         Me.playText.Margin = New System.Windows.Forms.Padding(0)
         Me.playText.Name = "playText"
-        Me.playText.Size = New System.Drawing.Size(204, 87)
+        Me.playText.Size = New System.Drawing.Size(102, 41)
         Me.playText.TabIndex = 11
         Me.playText.Text = "메세지"
         Me.playText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(418, 78)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 13
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Game
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(14.0!, 32.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
-        Me.ClientSize = New System.Drawing.Size(2528, 2101)
+        Me.ClientSize = New System.Drawing.Size(1264, 985)
         Me.Controls.Add(Me.playContext)
         Me.Controls.Add(Me.endButton)
         Me.Controls.Add(Me.infoButton)
@@ -343,9 +321,7 @@ Partial Class Game
         Me.Controls.Add(Me.gameIcon)
         Me.Controls.Add(Me.infoContext)
         Me.DoubleBuffered = True
-        Me.Font = New System.Drawing.Font("맑은 고딕", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(6)
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Game"
