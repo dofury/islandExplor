@@ -40,8 +40,13 @@ Partial Class Game
         Me.endButton = New System.Windows.Forms.PictureBox()
         Me.infoContext = New System.Windows.Forms.Panel()
         Me.infoText = New System.Windows.Forms.Label()
-        Me.xButton = New System.Windows.Forms.PictureBox()
+        Me.infoXButton = New System.Windows.Forms.PictureBox()
         Me.playContext = New System.Windows.Forms.Panel()
+        Me.playTextContent = New System.Windows.Forms.Label()
+        Me.hintContext = New System.Windows.Forms.Panel()
+        Me.hintLabelContent = New System.Windows.Forms.Label()
+        Me.hintLabel = New System.Windows.Forms.Label()
+        Me.hintXButton = New System.Windows.Forms.PictureBox()
         Me.quizCheck = New System.Windows.Forms.Label()
         Me.hintButton = New System.Windows.Forms.PictureBox()
         Me.checkButton = New System.Windows.Forms.PictureBox()
@@ -54,8 +59,10 @@ Partial Class Game
         CType(Me.infoButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.endButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.infoContext.SuspendLayout()
-        CType(Me.xButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.infoXButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.playContext.SuspendLayout()
+        Me.hintContext.SuspendLayout()
+        CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -240,7 +247,7 @@ Partial Class Game
         Me.infoContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.context
         Me.infoContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.infoContext.Controls.Add(Me.infoText)
-        Me.infoContext.Controls.Add(Me.xButton)
+        Me.infoContext.Controls.Add(Me.infoXButton)
         Me.infoContext.Location = New System.Drawing.Point(1, 2)
         Me.infoContext.Name = "infoContext"
         Me.infoContext.Size = New System.Drawing.Size(1263, 131)
@@ -256,21 +263,23 @@ Partial Class Game
         Me.infoText.TabIndex = 1
         Me.infoText.Text = "메세지"
         '
-        'xButton
+        'infoXButton
         '
-        Me.xButton.Image = Global.islandExploration.My.Resources.Resources.xButton
-        Me.xButton.Location = New System.Drawing.Point(1202, 0)
-        Me.xButton.Name = "xButton"
-        Me.xButton.Size = New System.Drawing.Size(61, 61)
-        Me.xButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.xButton.TabIndex = 0
-        Me.xButton.TabStop = False
+        Me.infoXButton.Image = Global.islandExploration.My.Resources.Resources.xButton
+        Me.infoXButton.Location = New System.Drawing.Point(1202, 0)
+        Me.infoXButton.Name = "infoXButton"
+        Me.infoXButton.Size = New System.Drawing.Size(61, 61)
+        Me.infoXButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.infoXButton.TabIndex = 0
+        Me.infoXButton.TabStop = False
         '
         'playContext
         '
         Me.playContext.BackColor = System.Drawing.Color.Transparent
         Me.playContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.playContext
         Me.playContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.playContext.Controls.Add(Me.playTextContent)
+        Me.playContext.Controls.Add(Me.hintContext)
         Me.playContext.Controls.Add(Me.quizCheck)
         Me.playContext.Controls.Add(Me.hintButton)
         Me.playContext.Controls.Add(Me.checkButton)
@@ -279,15 +288,72 @@ Partial Class Game
         Me.playContext.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.playContext.Location = New System.Drawing.Point(1, 139)
         Me.playContext.Name = "playContext"
-        Me.playContext.Size = New System.Drawing.Size(800, 590)
+        Me.playContext.Size = New System.Drawing.Size(491, 590)
         Me.playContext.TabIndex = 10
         Me.playContext.Visible = False
+        '
+        'playTextContent
+        '
+        Me.playTextContent.BackColor = System.Drawing.Color.Transparent
+        Me.playTextContent.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.playTextContent.Location = New System.Drawing.Point(103, 14)
+        Me.playTextContent.Margin = New System.Windows.Forms.Padding(0)
+        Me.playTextContent.Name = "playTextContent"
+        Me.playTextContent.Size = New System.Drawing.Size(102, 41)
+        Me.playTextContent.TabIndex = 17
+        Me.playTextContent.Text = "내용"
+        Me.playTextContent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'hintContext
+        '
+        Me.hintContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.context
+        Me.hintContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.hintContext.Controls.Add(Me.hintLabelContent)
+        Me.hintContext.Controls.Add(Me.hintLabel)
+        Me.hintContext.Controls.Add(Me.hintXButton)
+        Me.hintContext.Location = New System.Drawing.Point(11, 211)
+        Me.hintContext.Name = "hintContext"
+        Me.hintContext.Size = New System.Drawing.Size(344, 300)
+        Me.hintContext.TabIndex = 16
+        Me.hintContext.Visible = False
+        '
+        'hintLabelContent
+        '
+        Me.hintLabelContent.AutoSize = True
+        Me.hintLabelContent.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.hintLabelContent.Location = New System.Drawing.Point(9, 41)
+        Me.hintLabelContent.Name = "hintLabelContent"
+        Me.hintLabelContent.Size = New System.Drawing.Size(60, 35)
+        Me.hintLabelContent.TabIndex = 17
+        Me.hintLabelContent.Text = "내용"
+        '
+        'hintLabel
+        '
+        Me.hintLabel.BackColor = System.Drawing.Color.Transparent
+        Me.hintLabel.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.hintLabel.Location = New System.Drawing.Point(0, 0)
+        Me.hintLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.hintLabel.Name = "hintLabel"
+        Me.hintLabel.Size = New System.Drawing.Size(102, 41)
+        Me.hintLabel.TabIndex = 17
+        Me.hintLabel.Text = "메세지"
+        Me.hintLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'hintXButton
+        '
+        Me.hintXButton.Image = Global.islandExploration.My.Resources.Resources.xButton
+        Me.hintXButton.Location = New System.Drawing.Point(299, 0)
+        Me.hintXButton.Name = "hintXButton"
+        Me.hintXButton.Size = New System.Drawing.Size(45, 45)
+        Me.hintXButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.hintXButton.TabIndex = 2
+        Me.hintXButton.TabStop = False
         '
         'quizCheck
         '
         Me.quizCheck.AutoSize = True
         Me.quizCheck.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.quizCheck.Location = New System.Drawing.Point(352, 432)
+        Me.quizCheck.Location = New System.Drawing.Point(20, 55)
         Me.quizCheck.Name = "quizCheck"
         Me.quizCheck.Size = New System.Drawing.Size(60, 35)
         Me.quizCheck.TabIndex = 15
@@ -296,7 +362,7 @@ Partial Class Game
         'hintButton
         '
         Me.hintButton.Image = Global.islandExploration.My.Resources.Resources.hintButton
-        Me.hintButton.Location = New System.Drawing.Point(649, 492)
+        Me.hintButton.Location = New System.Drawing.Point(11, 138)
         Me.hintButton.Name = "hintButton"
         Me.hintButton.Size = New System.Drawing.Size(56, 57)
         Me.hintButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -306,7 +372,7 @@ Partial Class Game
         'checkButton
         '
         Me.checkButton.Image = Global.islandExploration.My.Resources.Resources.checkButton
-        Me.checkButton.Location = New System.Drawing.Point(711, 492)
+        Me.checkButton.Location = New System.Drawing.Point(73, 138)
         Me.checkButton.Name = "checkButton"
         Me.checkButton.Size = New System.Drawing.Size(56, 57)
         Me.checkButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -316,7 +382,7 @@ Partial Class Game
         'playTextInput
         '
         Me.playTextInput.Font = New System.Drawing.Font("맑은 고딕", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.playTextInput.Location = New System.Drawing.Point(328, 470)
+        Me.playTextInput.Location = New System.Drawing.Point(11, 93)
         Me.playTextInput.Name = "playTextInput"
         Me.playTextInput.Size = New System.Drawing.Size(100, 39)
         Me.playTextInput.TabIndex = 12
@@ -327,12 +393,12 @@ Partial Class Game
         '
         Me.playText.BackColor = System.Drawing.Color.Transparent
         Me.playText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.playText.Location = New System.Drawing.Point(26, 234)
+        Me.playText.Location = New System.Drawing.Point(11, 14)
         Me.playText.Margin = New System.Windows.Forms.Padding(0)
         Me.playText.Name = "playText"
         Me.playText.Size = New System.Drawing.Size(102, 41)
         Me.playText.TabIndex = 11
-        Me.playText.Text = "메세지"
+        Me.playText.Text = "제목"
         Me.playText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Game
@@ -349,7 +415,10 @@ Partial Class Game
         Me.Controls.Add(Me.gameIcon)
         Me.Controls.Add(Me.infoContext)
         Me.DoubleBuffered = True
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Game"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Game"
@@ -362,9 +431,12 @@ Partial Class Game
         CType(Me.endButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.infoContext.ResumeLayout(False)
         Me.infoContext.PerformLayout()
-        CType(Me.xButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.infoXButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.playContext.ResumeLayout(False)
         Me.playContext.PerformLayout()
+        Me.hintContext.ResumeLayout(False)
+        Me.hintContext.PerformLayout()
+        CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -387,7 +459,7 @@ Partial Class Game
     Friend WithEvents infoButton As PictureBox
     Friend WithEvents endButton As PictureBox
     Friend WithEvents infoContext As Panel
-    Friend WithEvents xButton As PictureBox
+    Friend WithEvents infoXButton As PictureBox
     Friend WithEvents infoText As Label
     Friend WithEvents playContext As Panel
     Friend WithEvents playText As Label
@@ -395,4 +467,9 @@ Partial Class Game
     Friend WithEvents hintButton As PictureBox
     Friend WithEvents checkButton As PictureBox
     Friend WithEvents quizCheck As Label
+    Friend WithEvents hintContext As Panel
+    Friend WithEvents hintXButton As PictureBox
+    Friend WithEvents hintLabelContent As Label
+    Friend WithEvents hintLabel As Label
+    Friend WithEvents playTextContent As Label
 End Class

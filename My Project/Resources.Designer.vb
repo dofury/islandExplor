@@ -183,6 +183,16 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property quiz2() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("quiz2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property startButton() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("startButton", resourceCulture)
