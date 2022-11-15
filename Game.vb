@@ -26,6 +26,8 @@ Public Class Game
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Start_Init()
         Init()
+        'context.Location = New Point(Me.Width - 15, context.Height)
+        'Me.Controls.Add(context)
 
 
     End Sub
@@ -38,21 +40,6 @@ Public Class Game
         endButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 250) '버튼 위치조절'
         infoContext.Height = Me.Height
         infoContext.Location = New Point(0, 0)
-        playContext.Height = Me.Height / 5 * 4
-        playContext.Width = Me.Width / 5 * 4
-        playContext.Location = New Point(Me.Width / 10, Me.Height / 10)
-        playText.Location += New Point(0, 100)
-        playText.Width = playContext.Width
-        playTextInput.Width = playContext.Width / 4
-        playTextInput.Location = New Point(playContext.Width / 2 - playTextInput.Width / 2, 500)
-        playText.Text = "동물원에는 여러 동물이 있다." + vbCrLf +
-"그 중 뱀, 토끼, 늑대는 같은 우리에서 살고 있다.
-뱀은 10마리가 있고 3일마다 한마리 씩 늘어난다, 
-토끼는 5마리가 있고 늑대는 2마리가 있다.
-매일 늑대가 두 마리의 토끼를 죽이고 
-새로 다섯 마리의 토끼가 태어난다고 한다.
-30일후에 모든 동물의 다리 갯수는 몇개일까?
-"
         gameIcon.Location = New Point(Me.Size.Width - gameIcon.Width - 20, Me.Size.Height - gameIcon.Height - 40)
         textTimer = New Timers.Timer(textTimerInterval)
         textTimer.AutoReset = True
@@ -140,7 +127,6 @@ Public Class Game
         gameSound.AddSound("vibrate", "sound/Phone Vibrating Sound.mp3")
         gameSound.AddSound("doorBell", "sound/Door Bell Sound.mp3")
         gameSound.AddSound("writePen", "sound/Pencil Write Kor.wav")
-        gameSound.AddSound("phoneEnd", "sound/Phone Dialing With Dialtone Sound.wav")
         gameSound.SetVolume("living", 70)
         gameSound.SetVolume("title", 80)
     End Sub
@@ -157,11 +143,11 @@ Public Class Game
     Private Sub Story_1()
 
         setPortrait(loadText(loadTextCount))
-        Story_1_Event()
+        Story_1_Next()
         gText = loadText(loadTextCount + 1)
         textTypingTimer.Start()
     End Sub
-    Private Sub Story_1_Event()
+    Private Sub Story_1_Next()
         If gameSound.IsPlaying("living") = False Then
             gameSound.Play("living")
         End If
@@ -186,12 +172,6 @@ Public Class Game
                 End If
             Case 6
                 gameSound.Stop("vibrate")
-            Case 16
-                If gameSound.IsPlaying("phoneEnd") = False Then
-                    gameSound.Play("phoneEnd")
-                End If
-            Case 17
-                gameSound.Stop("phoneEnd")
             Case 19
                 If gameSound.IsPlaying("doorBell") = False Then
                     gameSound.Play("doorBell")
@@ -204,9 +184,6 @@ Public Class Game
                 End If
             Case 25
                 gameSound.Stop("writePen")
-            Case 31
-                playContext.Show()
-                gameContext.Hide()
         End Select
     End Sub
     Private Sub Portrait(check As Boolean)
@@ -462,7 +439,13 @@ Public Class Game
     End Sub
 
     Private Sub gameText_TextChanged(sender As Object, e As EventArgs) Handles gameText.TextChanged
-        text_AutoSize(sender)
+        Dim MeasuredSize As Size
+        MeasuredSize = TextRenderer.MeasureText(CType(sender, Label).Text, CType(sender, Label).Font,
+                                                CType(sender, Label).Size,
+                                                TextFormatFlags.WordBreak Or TextFormatFlags.TextBoxControl)
+        CType(sender, Label).Height = MeasuredSize.Height
+
+
     End Sub
 
     Private Sub endButton_Click(sender As Object, e As EventArgs) Handles endButton.Click
@@ -487,25 +470,10 @@ Public Class Game
     End Sub
 
     Private Sub infoText_TextChanged(sender As Object, e As EventArgs) Handles infoText.TextChanged
-        text_AutoSize(sender)
-    End Sub
-
-    Private Sub playText_TextChanged(sender As Object, e As EventArgs) Handles playText.TextChanged
-        text_AutoSize(sender)
-    End Sub
-
-    Private Sub text_AutoSize(sender As Object)
         Dim MeasuredSize As Size
         MeasuredSize = TextRenderer.MeasureText(CType(sender, Label).Text, CType(sender, Label).Font,
                                                 CType(sender, Label).Size,
                                                 TextFormatFlags.WordBreak Or TextFormatFlags.TextBoxControl)
         CType(sender, Label).Height = MeasuredSize.Height
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If playTextInput.Text = "" Then
-            playContext.Hide()
-            gameContext.Show()
-        End If
     End Sub
 End Class
