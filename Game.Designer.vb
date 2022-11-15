@@ -42,9 +42,9 @@ Partial Class Game
         Me.infoText = New System.Windows.Forms.Label()
         Me.xButton = New System.Windows.Forms.PictureBox()
         Me.playContext = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.playTextInput = New System.Windows.Forms.TextBox()
         Me.playText = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -277,11 +277,21 @@ Partial Class Game
         Me.playContext.TabIndex = 10
         Me.playContext.Visible = False
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(418, 78)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 13
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'playTextInput
         '
-        Me.playTextInput.Location = New System.Drawing.Point(151, 72)
+        Me.playTextInput.Font = New System.Drawing.Font("맑은 고딕", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.playTextInput.Location = New System.Drawing.Point(157, 58)
         Me.playTextInput.Name = "playTextInput"
-        Me.playTextInput.Size = New System.Drawing.Size(100, 23)
+        Me.playTextInput.Size = New System.Drawing.Size(100, 39)
         Me.playTextInput.TabIndex = 12
         Me.playTextInput.Text = "메세지"
         Me.playTextInput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -297,15 +307,6 @@ Partial Class Game
         Me.playText.TabIndex = 11
         Me.playText.Text = "메세지"
         Me.playText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(418, 78)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 13
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'Game
         '
