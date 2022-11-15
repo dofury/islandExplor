@@ -280,7 +280,7 @@ Public Class Game
             Case 25
                 gameSound.Stop("writePen")
             Case 30
-                TextTimer_Stop()'skip and auto 일시 퀴즈 전에 멈춤
+                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
             Case 31
                 quiz_Show()
         End Select
@@ -367,6 +367,7 @@ Public Class Game
     Private Sub gameText_Check()
         If Not gameText.Text = gText Then '게임 텍스트와 실제 보여지는 텍스트가 다르면 바로보여주는 함수
             gameText.Text = gText
+            textTypingTimer.Stop()
         Else
             If loadTextCount < (loadText.Length - 2) Then
                 story += 1
@@ -435,6 +436,7 @@ Public Class Game
     End Sub
 
     Private Sub autoMenu_Click(sender As Object, e As EventArgs) Handles autoMenu.Click
+        SE_Stop()
         Object_MouseClick()
         If skipCheck = False Then
             If autoCheck = False Then
@@ -449,10 +451,8 @@ Public Class Game
 
     End Sub
     Private Sub autoSkipMenu_On()
-        textTypingTimer.Stop()
-        gameText.Text = gText
-
         gameText_Check()
+
         Game_Next()
     End Sub
 
@@ -474,6 +474,7 @@ Public Class Game
     End Sub
 
     Private Sub skipMenu_Click(sender As Object, e As EventArgs) Handles skipMenu.Click
+        SE_Stop()
         If autoCheck = False Then
             If skipCheck = False Then
                 skipCheck = True
