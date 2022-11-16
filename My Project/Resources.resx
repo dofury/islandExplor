@@ -151,9 +151,6 @@
   <data name="postman" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\postman.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="checkButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\checkButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="hintButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hintButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -165,5 +162,11 @@
   </data>
   <data name="quiz2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quiz2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="checkButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\checkButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="village_entry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\village_entry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

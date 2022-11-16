@@ -52,6 +52,8 @@ Partial Class Game
         Me.checkButton = New System.Windows.Forms.PictureBox()
         Me.playTextInput = New System.Windows.Forms.TextBox()
         Me.playText = New System.Windows.Forms.Label()
+        Me.loadingContext = New System.Windows.Forms.Panel()
+        Me.loadingText = New System.Windows.Forms.Label()
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,6 +67,7 @@ Partial Class Game
         CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.loadingContext.SuspendLayout()
         Me.SuspendLayout()
         '
         'gameText
@@ -278,8 +281,8 @@ Partial Class Game
         Me.playContext.BackColor = System.Drawing.Color.Transparent
         Me.playContext.BackgroundImage = Global.islandExploration.My.Resources.Resources.playContext
         Me.playContext.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.playContext.Controls.Add(Me.playTextContent)
         Me.playContext.Controls.Add(Me.hintContext)
+        Me.playContext.Controls.Add(Me.playTextContent)
         Me.playContext.Controls.Add(Me.quizCheck)
         Me.playContext.Controls.Add(Me.hintButton)
         Me.playContext.Controls.Add(Me.checkButton)
@@ -313,7 +316,7 @@ Partial Class Game
         Me.hintContext.Controls.Add(Me.hintXButton)
         Me.hintContext.Location = New System.Drawing.Point(11, 211)
         Me.hintContext.Name = "hintContext"
-        Me.hintContext.Size = New System.Drawing.Size(344, 300)
+        Me.hintContext.Size = New System.Drawing.Size(347, 300)
         Me.hintContext.TabIndex = 16
         Me.hintContext.Visible = False
         '
@@ -401,12 +404,34 @@ Partial Class Game
         Me.playText.Text = "제목"
         Me.playText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'loadingContext
+        '
+        Me.loadingContext.BackColor = System.Drawing.Color.Black
+        Me.loadingContext.Controls.Add(Me.loadingText)
+        Me.loadingContext.Location = New System.Drawing.Point(498, 608)
+        Me.loadingContext.Name = "loadingContext"
+        Me.loadingContext.Size = New System.Drawing.Size(200, 121)
+        Me.loadingContext.TabIndex = 11
+        Me.loadingContext.Visible = False
+        '
+        'loadingText
+        '
+        Me.loadingText.AutoSize = True
+        Me.loadingText.BackColor = System.Drawing.Color.Transparent
+        Me.loadingText.ForeColor = System.Drawing.Color.White
+        Me.loadingText.Location = New System.Drawing.Point(74, 56)
+        Me.loadingText.Name = "loadingText"
+        Me.loadingText.Size = New System.Drawing.Size(43, 15)
+        Me.loadingText.TabIndex = 12
+        Me.loadingText.Text = "메세지"
+        '
         'Game
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1264, 985)
+        Me.Controls.Add(Me.loadingContext)
         Me.Controls.Add(Me.playContext)
         Me.Controls.Add(Me.endButton)
         Me.Controls.Add(Me.infoButton)
@@ -439,6 +464,8 @@ Partial Class Game
         CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.loadingContext.ResumeLayout(False)
+        Me.loadingContext.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -472,4 +499,6 @@ Partial Class Game
     Friend WithEvents hintLabelContent As Label
     Friend WithEvents hintLabel As Label
     Friend WithEvents playTextContent As Label
+    Friend WithEvents loadingContext As Panel
+    Friend WithEvents loadingText As Label
 End Class

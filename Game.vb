@@ -5,7 +5,7 @@ Imports System.Net.Security
 Public Class Game
     Dim titleImage As Image
     Dim homeImage As Image
-    Dim island As Image
+    Dim village_entry As Image
     Dim quizImages As New ArrayList
 
     Dim stage As Integer
@@ -18,8 +18,10 @@ Public Class Game
     Private textTimer As System.Timers.Timer
     Private textTypingTimer As System.Timers.Timer
     Private systemTimer As System.Timers.Timer
+
     Private systemTimerType As String
     Private timerInterval As Integer = 50
+    Private loadingCount As Integer = 0
 
     Dim gText As String
     Dim gTextCount As Integer
@@ -46,8 +48,6 @@ Public Class Game
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Start_Init()
         Init()
-
-
     End Sub
     Private Sub Start_Init()
 
@@ -86,6 +86,12 @@ Public Class Game
         playTextInput.Width = playContext.Width / 4
         playTextInput.Location = New Point(playContext.Width / 2 - playTextInput.Width / 2, 700)
 
+        loadingContext.Width = Me.Width
+        loadingContext.Height = Me.Height
+        loadingContext.Location = New Point(0, 0)
+        loadingText.Font = tfont_24
+        loadingText.Text = "로딩중"
+        loadingText.Location = New Point(loadingContext.Width / 2 - loadingText.Width / 2, loadingContext.Height / 2 - loadingText.Height / 2)
 
 
 
@@ -95,7 +101,6 @@ Public Class Game
         quizCheck.Location = New Point(playTextInput.Location.X + (playTextInput.Width / 2 - quizCheck.Width / 2), playTextInput.Location.Y - quizCheck.Height)
         quizCheck.Font = tfont_16
         quizCheck.Text = ""
-
 
         hintContext.Location = New Point(playContext.Width / 2 - hintContext.Width / 2, playContext.Height / 2 - hintContext.Height / 2)
         hintLabel.Text = "힌트"
@@ -199,7 +204,7 @@ Public Class Game
     Private Sub Image_Load()
         titleImage = My.Resources.title
         homeImage = My.Resources.home
-        island = My.Resources.title
+        village_entry = My.Resources.village_entry
         quizImages.Add(My.Resources.quiz1)
         quizImages.Add(My.Resources.quiz2)
     End Sub
@@ -226,6 +231,11 @@ Public Class Game
             Case 1
                 e.Graphics.DrawImage(homeImage, 0, 0, Me.Width - 15, Me.Height)
 
+            Case 2
+                If story <= 2 Then
+                    e.Graphics.DrawImage(village_entry, 0, 0, Me.Width - 15, Me.Height)
+                End If
+
         End Select
 
     End Sub
@@ -234,6 +244,7 @@ Public Class Game
         setPortrait(loadText(loadTextCount))
         Story_1_Event()
         gText = loadText(loadTextCount + 1)
+        Invalidate()
         textTypingTimer.Start()
     End Sub
     Private Sub Story_1_Event()
@@ -285,6 +296,39 @@ Public Class Game
                 quiz_Show()
         End Select
     End Sub
+
+    Private Sub Story_2()
+
+        setPortrait(loadText(loadTextCount))
+        Story_2_Event()
+        gText = loadText(loadTextCount + 1)
+        Invalidate()
+        textTypingTimer.Start()
+    End Sub
+    Private Sub Story_2_Event()
+        If gameSound.IsPlaying("living") = False Then
+            gameSound.Play("living")
+        End If
+        Select Case story 'story.txt 위치 계산 공식 (story+1)*2
+            Case 0
+                gamePortrait.BackgroundImage = My.Resources.title
+            Case 1
+            Case 2
+            Case 3
+            Case 4
+            Case 5
+
+            Case 6
+            Case 16
+            Case 17
+            Case 19
+            Case 20
+            Case 24
+            Case 25
+            Case 30
+            Case 31
+        End Select
+    End Sub
     Private Sub Portrait(check As Boolean)
         If check = False Then
             gamePortrait.Hide()
@@ -322,7 +366,7 @@ Public Class Game
 
     Delegate Sub deleText(ByVal text As String) '델리게이트 선언
     Private Sub allocText(ByVal text As String) '델리게이트 함수선언
-        If gameText.Text.Length = text.Length Then
+        If gameText.Text = text Then
             gTextCount = 0
             textTypingTimer.Stop()
             Exit Sub
@@ -336,8 +380,28 @@ Public Class Game
 
     Delegate Sub deleLabel(label As Label) '델리게이트 선언
     Private Sub allocLabel(label As Label) '델리게이트 함수선언
-        label.Text = ""
-        systemTimer.Stop()
+        If systemTimerType = "quizCheck1" Or systemTimerType = "quizCheck2" Then
+            label.Text = ""
+            systemTimer.Stop()
+        End If
+        If systemTimerType = "loading" Then
+            If loadingCount <= 10 Then
+                If loadingCount = 3 Or loadingCount = 7 Then
+                    loadingText.Text = "로딩중"
+                Else
+                    loadingText.Text += "."
+                End If
+                loadingCount += 1
+            Else
+                loadingText.Text = "로딩중"
+                loadingCount = 0
+                systemTimer.Stop()
+                loadingContext.Hide()
+
+            End If
+
+        End If
+
     End Sub
 
     Private Sub gameContext_Click(sender As Object, e As EventArgs) Handles gameContext.Click
@@ -357,8 +421,15 @@ Public Class Game
         gameName.Show()
         Game_Next()
         Invalidate()
+        loading_Show()
     End Sub
 
+    Private Sub loading_Show()
+        loadingContext.Show()
+        systemTimerType = "loading"
+        systemTimer.Interval = 100
+        systemTimer.Start()
+    End Sub
     Private Sub gameText_Click(sender As Object, e As EventArgs) Handles gameText.Click
         gameText_Check()
         Game_Next()
@@ -369,7 +440,7 @@ Public Class Game
             gameText.Text = gText
             textTypingTimer.Stop()
         Else
-            If loadTextCount < (loadText.Length - 2) Then
+            If loadTextCount < loadText.Length - 2 Then
                 story += 1
                 loadTextCount += 2
             End If
@@ -379,9 +450,16 @@ Public Class Game
 
     Private Sub Game_Next() '다음 게임 텍스트로 넘어가는 함수
         Object_MouseClick()
+        If story = 33 Then
+            stage += 1
+            story = 0
+            loading_Show()
+        End If
         Select Case stage
             Case 1
                 Story_1()
+            Case 2
+                Story_2()
         End Select
     End Sub
 
@@ -603,30 +681,38 @@ Public Class Game
             Case 0
                 Try
                     If playTextInput.Text = 0 Then
-                        gameSound.Play("correct")
-                        quizCheck.ForeColor = Color.Green
-                        quizCheck.Text = "정답"
-                        loadQuizCount += 2
-                        quizNumber += 1
-                        systemTimerType = "quizCheck1"
-                        systemTimer.Start()
+                        quiz_Correct("quizCheck1")
                     Else
                         Throw New System.Exception("오답")
                     End If
                 Catch ex As Exception
-                    gameSound.Play("incorrect")
-                    quizCheck.ForeColor = Color.Red
-                    quizCheck.Text = "오답"
-                    systemTimerType = "quizCheck2"
-                    systemTimer.Start()
-
+                    quiz_Incorrect("quizCheck2")
                 End Try
         End Select
 
     End Sub
-
+    Private Sub quiz_Correct(type As String)
+        gameSound.Play("correct")
+        quizCheck.ForeColor = Color.Green
+        quizCheck.Text = "정답"
+        loadQuizCount += 2
+        quizNumber += 1
+        systemTimerType = type
+        systemTimer.Interval = 1500
+        systemTimer.Start()
+    End Sub
+    Private Sub quiz_Incorrect(type As String)
+        gameSound.Play("incorrect")
+        quizCheck.ForeColor = Color.Red
+        quizCheck.Text = "오답"
+        systemTimerType = type
+        systemTimer.Interval = 1500
+        systemTimer.Start()
+    End Sub
     Private Sub systemTimer_On()
         Select Case systemTimerType
+            Case "loading"
+                Me.Invoke(New deleLabel(AddressOf allocLabel), loadingText) '크로스쓰레드 문제 해결
             Case "quizCheck1"
                 Me.Invoke(New deleLabel(AddressOf allocLabel), quizCheck) '크로스쓰레드 문제 해결
                 playContext.Hide()
@@ -692,4 +778,5 @@ Public Class Game
             skipMenu.ForeColor = Color.Black
         End If
     End Sub
+
 End Class
