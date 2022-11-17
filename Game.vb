@@ -61,9 +61,9 @@ Public Class Game
         tfont_16 = New Font(font_naver.Families(0), 16)
         tfont_24 = New Font(font_naver.Families(0), 24)
 
-        startButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 50) '버튼 위치조절'
-        infoButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 150) '버튼 위치조절'
-        endButton.Location = New Point(Me.Size.Width / 2 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 250) '버튼 위치조절'
+        startButton.Location = New Point(Me.Size.Width / 2 - 15 - (startButton.Width / 2), Me.Size.Height / 2 - 10) '버튼 위치조절'
+        infoButton.Location = New Point(Me.Size.Width / 2 - 15 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 90) '버튼 위치조절'
+        endButton.Location = New Point(Me.Size.Width / 2 - 15 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 190) '버튼 위치조절'
 
         infoContext.Height = Me.Height
         infoContext.Location = New Point(0, 0)
@@ -231,7 +231,7 @@ Public Class Game
     Private Sub Game_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
         Select Case stage
             Case 0
-                e.Graphics.DrawImage(titleImage, 0, 0)
+                e.Graphics.DrawImage(titleImage, 0, 0, Me.Width - 15, Me.Height)
             Case 1
                 e.Graphics.DrawImage(homeImage, 0, 0, Me.Width - 15, Me.Height)
                 If story = 3 Or story = 4 Then
