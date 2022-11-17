@@ -6,8 +6,9 @@ Public Class Game
     Dim titleImage As Image
     Dim homeImage As Image
     Dim village_entry As Image
-    Dim gameItems(8) As Image
-    Dim quizImages As New ArrayList
+    Dim gameItems(10) As Image
+    Dim quizImages(10) As Image
+    Dim quizResultImages(10) As Image
 
     Dim stage As Integer
     Dim story As Integer
@@ -37,14 +38,20 @@ Public Class Game
     Dim loadQuizCount As Integer
     Dim loadTextCount As Integer
 
+    Dim playResultText As String
+    Dim playResult As Boolean
+
+    Dim akControl As Boolean = True
+
     Dim gameSound As New GameSounds
 
     Dim pcMousePoint As New Point
     Dim hintContextCheck As Boolean
 
     Public font_naver As PrivateFontCollection = New PrivateFontCollection()
-    Dim tfont_24 As Font
     Dim tfont_16 As Font
+    Dim tfont_24 As Font
+    Dim tfont_32 As Font
 
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Start_Init()
@@ -60,6 +67,7 @@ Public Class Game
         font_naver.AddFontFile("font/MaruBuri-Bold.ttf")
         tfont_16 = New Font(font_naver.Families(0), 16)
         tfont_24 = New Font(font_naver.Families(0), 24)
+        tfont_32 = New Font(font_naver.Families(0), 32)
 
         startButton.Location = New Point(Me.Size.Width / 2 - 15 - (startButton.Width / 2), Me.Size.Height / 2 - 10) '버튼 위치조절'
         infoButton.Location = New Point(Me.Size.Width / 2 - 15 - (startButton.Size.Width / 2), Me.Size.Height / 2 + 90) '버튼 위치조절'
@@ -83,14 +91,19 @@ Public Class Game
 
         playText.Text = loadQuiz(loadQuizCount)
         playTextContent.Text = loadQuiz(loadQuizCount + 1)
+        hintLabelContent.Text = loadQuiz(loadQuizCount + 2)
+        playResultText = loadQuiz(loadQuizCount + 3)
 
         playTextInput.Width = playContext.Width / 4
         playTextInput.Location = New Point(playContext.Width / 2 - playTextInput.Width / 2, 700)
 
+        okButton.Location = New Point(playContext.Width / 2 - okButton.Width / 2, 700)
+        okButton.Hide()
+
         loadingContext.Width = Me.Width
         loadingContext.Height = Me.Height
         loadingContext.Location = New Point(0, 0)
-        loadingText.Font = tfont_24
+        loadingText.Font = tfont_32
         loadingText.Text = "로딩중"
         loadingText.Location = New Point(loadingContext.Width / 2 - loadingText.Width / 2, loadingContext.Height / 2 - loadingText.Height / 2)
 
@@ -106,8 +119,7 @@ Public Class Game
         hintContext.Location = New Point(playContext.Width / 2 - hintContext.Width / 2, playContext.Height / 2 - hintContext.Height / 2)
         hintLabel.Text = "힌트"
         hintLabel.Font = tfont_24
-        hintLabel.Location = New Point(hintContext.Width / 2 - hintLabel.Width / 2, 50)
-        hintLabelContent.Text = "머리를 써라"
+        hintLabel.Location = New Point(hintContext.Width / 2 - hintLabel.Width / 2, 30)
         hintLabelContent.Font = tfont_16
         hintLabelContent.Location = New Point(hintContext.Width / 2 - hintLabelContent.Width / 2, 100)
 
@@ -138,13 +150,17 @@ Public Class Game
         infoText.Font = tfont_16
         infoText.Text = ""
         infoText.Text += "게임 소개:" + vbCrLf
-        infoText.Text += "이 게임은 선택형 스토리 게임 입니다. 선택에 따라 게임의 엔딩이 정해집니다." + vbCrLf
+        infoText.Text += "이 게임은 퍼즐형 스토리 게임 입니다. 수수께끼의 해결을 통해 게임을 진행합니다." + vbCrLf
+        infoText.Text += "제작자: 차도훈(도푸리)" + vbCrLf
         infoText.Text += "저작권:" + vbCrLf
+        infoText.Text += "- 퀴즈" + vbCrLf
+        infoText.Text += "첫번째 퀴즈를 제외한 퀴즈는 레이튼 교수 이상한 마을을 참고했습니다." + vbCrLf
         infoText.Text += "- 이미지" + vbCrLf
         infoText.Text += "게임의 모든 이미지는 novel AI를 통해 제작했습니다." + vbCrLf
         infoText.Text += "- 노래" + vbCrLf
         infoText.Text += "● 배경음악" + vbCrLf
         infoText.Text += "HOW ARE YOU, 김재영, 공유마당" + vbCrLf + "https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13073758&menuNo=200020" + vbCrLf
+        infoText.Text += "Tong tong (통통), 이혜린, 공유마당" + vbCrLf + "https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13048800&menuNo=200020" + vbCrLf
         infoText.Text += "Adventure Starting" + vbCrLf
         infoText.Text += "● 효과음" + vbCrLf
         infoText.Text += "대한민국 대표 BGM 셀바이뮤직 https://www.sellbuymusic.com"
@@ -164,18 +180,17 @@ Public Class Game
         loadTextCount = 0
         loadQuizCount = 0
         timerInterval = 0
-        gamePortrait.Image = My.Resources.context
+        playResult = False
         gameName.Text = ""
         playTextInput.Text = ""
         gameSound.Play("title")
     End Sub
     Private Sub BGM_Stop()
-        Select Case stage
-            Case 0
-                gameSound.Stop("title")
-            Case 1
-                gameSound.Stop("living")
-        End Select
+
+        gameSound.Stop("title")
+        gameSound.Stop("living")
+        gameSound.Stop("village")
+
     End Sub
 
     Private Sub LoadStory() '스토리 원고 로드 함수'
@@ -206,8 +221,10 @@ Public Class Game
         titleImage = My.Resources.title
         homeImage = My.Resources.home
         village_entry = My.Resources.village_entry
-        quizImages.Add(My.Resources.quiz1)
-        quizImages.Add(My.Resources.quiz2)
+        quizImages(0) = My.Resources.quiz1
+        quizImages(1) = My.Resources.quiz2
+        quizResultImages(0) = quizImages(0)
+        quizResultImages(1) = My.Resources.quiz2_result
 
         gameItems(0) = My.Resources.stock '주식'
         gameItems(1) = My.Resources.map_and_letter '맵과 편지'
@@ -225,6 +242,7 @@ Public Class Game
         gameSound.AddSound("correct", "sound/Correct.mp3")
         gameSound.AddSound("incorrect", "sound/Error.mp3")
         gameSound.AddSound("pop", "sound/Blop Sound.mp3")
+        gameSound.AddSound("village", "sound/Tongtong.mp3")
         gameSound.SetVolume("living", 70)
         gameSound.SetVolume("title", 80)
     End Sub
@@ -242,7 +260,7 @@ Public Class Game
                 End If
 
             Case 2
-                If story <= 2 Then
+                If story >= 0 Then
                     e.Graphics.DrawImage(village_entry, 0, 0, Me.Width - 15, Me.Height)
                 End If
 
@@ -268,6 +286,7 @@ Public Class Game
     End Sub
     Private Sub Story_1_Event()
         If gameSound.IsPlaying("living") = False Then
+            BGM_Stop()
             gameSound.Play("living")
         End If
         Select Case story 'story.txt 위치 계산 공식 (story+1)*2
@@ -311,6 +330,7 @@ Public Class Game
                 gameSound.Stop("writePen")
             Case 30
                 TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
+                akControl = False 'skip auto 사용불가
             Case 31
                 quiz_Show()
         End Select
@@ -325,20 +345,18 @@ Public Class Game
         textTypingTimer.Start()
     End Sub
     Private Sub Story_2_Event()
-        If gameSound.IsPlaying("living") = False Then
-            gameSound.Play("living")
+        If gameSound.IsPlaying("village") = False Then
+            BGM_Stop()
+            gameSound.Play("village")
         End If
-        Select Case story 'story.txt 위치 계산 공식 (story+1)*2
+        Select Case story 'story.txt 위치 계산 공식 x/2 - 34
             Case 0
-                gamePortrait.BackgroundImage = My.Resources.title
-            Case 1
-            Case 2
-            Case 3
-            Case 4
-            Case 5
-
-            Case 6
-            Case 16
+                gamePortrait.BackgroundImage = My.Resources.village_entry
+            Case 9
+                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
+                akControl = False 'skip auto 사용불가
+            Case 10
+                quiz_Show()
             Case 17
             Case 19
             Case 20
@@ -371,6 +389,10 @@ Public Class Game
                 Portrait(True)
                 gameName.Text = name
                 gamePortrait.Image = My.Resources.postman
+            Case "베인"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.vayne
             Case Else
                 Portrait(False)
         End Select
@@ -399,8 +421,11 @@ Public Class Game
 
     Delegate Sub deleLabel(label As Label) '델리게이트 선언
     Private Sub allocLabel(label As Label) '델리게이트 함수선언
-        If systemTimerType = "quizCheck1" Or systemTimerType = "quizCheck2" Then
+        If systemTimerType = "quizCheck" Then
             label.Text = ""
+            If playResult = True Then
+                playResult_On()
+            End If
             systemTimer.Stop()
         End If
         If systemTimerType = "loading" Then
@@ -422,8 +447,26 @@ Public Class Game
         End If
 
     End Sub
+    Private Sub playResult_On()
+        okButton.Show()
+        playTextContent.Text = playResultText
+        checkButton.Hide()
+        playTextInput.Hide()
+        hintButton.Hide()
+    End Sub
+
+    Private Sub playResult_Off()
+        playResult = False
+        akControl = True
+        okButton.Hide()
+        playTextContent.Text = ""
+        checkButton.Show()
+        playTextInput.Show()
+        hintButton.Show()
+    End Sub
 
     Private Sub gameContext_Click(sender As Object, e As EventArgs) Handles gameContext.Click
+        TextTimer_Stop()
         gameText_Check()
         Game_Next()
     End Sub
@@ -450,6 +493,7 @@ Public Class Game
         systemTimer.Start()
     End Sub
     Private Sub gameText_Click(sender As Object, e As EventArgs) Handles gameText.Click
+        TextTimer_Stop()
         gameText_Check()
         Game_Next()
     End Sub
@@ -535,7 +579,7 @@ Public Class Game
     Private Sub autoMenu_Click(sender As Object, e As EventArgs) Handles autoMenu.Click
         SE_Stop()
         Object_MouseClick()
-        If skipCheck = False Then
+        If skipCheck = False And akControl = True Then
             If autoCheck = False Then
                 autoCheck = True
                 textTimer.Interval = 3000
@@ -549,7 +593,6 @@ Public Class Game
     End Sub
     Private Sub autoSkipMenu_On()
         gameText_Check()
-
         Game_Next()
     End Sub
 
@@ -572,10 +615,10 @@ Public Class Game
 
     Private Sub skipMenu_Click(sender As Object, e As EventArgs) Handles skipMenu.Click
         SE_Stop()
-        If autoCheck = False Then
+        If autoCheck = False And akControl = True Then
             If skipCheck = False Then
                 skipCheck = True
-                textTimer.Interval = 500
+                textTimer.Interval = 100
                 textTimer.Enabled = True
             Else
                 skipCheck = False
@@ -692,7 +735,12 @@ Public Class Game
 
     Private Sub playContext_Paint(sender As Object, e As PaintEventArgs) Handles playContext.Paint
         Dim quizImageWidth As Integer = (playContext.Width / 2) - (quizImages(quizNumber).Width / 2) - 100
-        e.Graphics.DrawImage(quizImages(quizNumber), quizImageWidth, 50)
+        Dim quizResultImageWidth As Integer = (playContext.Width / 2) - (quizResultImages(quizNumber).Width / 2) - 30
+        If playResult = False Then
+            e.Graphics.DrawImage(quizImages(quizNumber), quizImageWidth, 50)
+        Else
+            e.Graphics.DrawImage(quizResultImages(quizNumber), quizResultImageWidth, 50)
+        End If
     End Sub
 
     Private Sub checkButton_Click(sender As Object, e As EventArgs) Handles checkButton.Click '정답 버튼'
@@ -700,12 +748,28 @@ Public Class Game
             Case 0
                 Try
                     If playTextInput.Text = 0 Then
-                        quiz_Correct("quizCheck1")
+                        quiz_Correct("quizCheck")
+                        playTextInput.Text = ""
+                        hintContext.Hide()
+                        Invalidate()
                     Else
                         Throw New System.Exception("오답")
                     End If
                 Catch ex As Exception
-                    quiz_Incorrect("quizCheck2")
+                    quiz_Incorrect("quizCheck")
+                End Try
+            Case 1
+                Try
+                    If playTextInput.Text = 4 Then
+                        quiz_Correct("quizCheck")
+                        playTextInput.Text = ""
+                        hintContext.Hide()
+                        Invalidate()
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect("quizCheck")
                 End Try
         End Select
 
@@ -714,8 +778,7 @@ Public Class Game
         gameSound.Play("correct")
         quizCheck.ForeColor = Color.Green
         quizCheck.Text = "정답"
-        loadQuizCount += 2
-        quizNumber += 1
+        playResult = True
         systemTimerType = type
         systemTimer.Interval = 1500
         systemTimer.Start()
@@ -732,11 +795,7 @@ Public Class Game
         Select Case systemTimerType
             Case "loading"
                 Me.Invoke(New deleLabel(AddressOf allocLabel), loadingText) '크로스쓰레드 문제 해결
-            Case "quizCheck1"
-                Me.Invoke(New deleLabel(AddressOf allocLabel), quizCheck) '크로스쓰레드 문제 해결
-                playContext.Hide()
-                gameContext.Show()
-            Case "quizCheck2"
+            Case "quizCheck"
                 Me.Invoke(New deleLabel(AddressOf allocLabel), quizCheck) '크로스쓰레드 문제 해결
         End Select
     End Sub
@@ -786,6 +845,8 @@ Public Class Game
     Private Sub quiz_Show()
         playText.Text = loadQuiz(loadQuizCount)
         playTextContent.Text = loadQuiz(loadQuizCount + 1)
+        hintLabelContent.Text = loadQuiz(loadQuizCount + 2)
+        playResultText = loadQuiz(loadQuizCount + 3)
         playContext.Show()
         gameContext.Hide()
     End Sub
@@ -795,7 +856,16 @@ Public Class Game
             textTimer.Stop()
             autoMenu.ForeColor = Color.Black
             skipMenu.ForeColor = Color.Black
+            skipCheck = False
+            autoCheck = False
         End If
     End Sub
 
+    Private Sub okButton_Click(sender As Object, e As EventArgs) Handles okButton.Click
+        playResult_Off()
+        playContext.Hide()
+        loadQuizCount += 4
+        quizNumber += 1
+        gameContext.Show()
+    End Sub
 End Class
