@@ -6,6 +6,7 @@ Public Class Game
     Dim titleImage As Image
     Dim homeImage As Image
     Dim village_entry As Image
+    Dim gameItems(8) As Image
     Dim quizImages As New ArrayList
 
     Dim stage As Integer
@@ -207,6 +208,9 @@ Public Class Game
         village_entry = My.Resources.village_entry
         quizImages.Add(My.Resources.quiz1)
         quizImages.Add(My.Resources.quiz2)
+
+        gameItems(0) = My.Resources.stock '주식'
+        gameItems(1) = My.Resources.map_and_letter '맵과 편지'
     End Sub
     Private Sub Sound_Load()
         gameSound.AddSound("title", "sound/Adventure Starting.mp3")
@@ -230,6 +234,11 @@ Public Class Game
                 e.Graphics.DrawImage(titleImage, 0, 0)
             Case 1
                 e.Graphics.DrawImage(homeImage, 0, 0, Me.Width - 15, Me.Height)
+                If story = 3 Or story = 4 Then
+                    e.Graphics.DrawImage(gameItems(0), getGameItemW(0), getGameItemH(0, 0))
+                    'stock
+
+                End If
 
             Case 2
                 If story <= 2 Then
@@ -237,8 +246,17 @@ Public Class Game
                 End If
 
         End Select
-
     End Sub
+
+    Private Function getGameItemW(i As Integer)
+        Dim gameItemW = Me.Width / 2 - gameItems(i).Width / 2
+        Return CInt(gameItemW)
+    End Function
+
+    Private Function getGameItemH(i As Integer, h As Integer)
+        Dim gameItemH = Me.Height / 2 - gameItems(0).Height / 2 - 100 + h
+        Return CInt(gameItemH)
+    End Function
     Private Sub Story_1()
 
         setPortrait(loadText(loadTextCount))

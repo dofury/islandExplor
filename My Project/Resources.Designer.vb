@@ -153,6 +153,16 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property map_and_letter() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("map_and_letter", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property playContext() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("playContext", resourceCulture)
@@ -196,6 +206,16 @@ Namespace My.Resources
         Friend ReadOnly Property startButton() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("startButton", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property stock() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("stock", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
