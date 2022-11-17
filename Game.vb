@@ -237,7 +237,8 @@ Public Class Game
                 If story = 3 Or story = 4 Then
                     e.Graphics.DrawImage(gameItems(0), getGameItemW(0), getGameItemH(0, 0))
                     'stock
-
+                ElseIf story = 27 Then
+                    e.Graphics.DrawImage(gameItems(1), getGameItemW(1), getGameItemH(1, -50))
                 End If
 
             Case 2
