@@ -734,12 +734,12 @@ Public Class Game
     End Sub
 
     Private Sub playContext_Paint(sender As Object, e As PaintEventArgs) Handles playContext.Paint
-        Dim quizImageWidth As Integer = (playContext.Width / 2) - (quizImages(quizNumber).Width / 2) - 100
-        Dim quizResultImageWidth As Integer = (playContext.Width / 2) - (quizResultImages(quizNumber).Width / 2) - 30
+        Dim quizImageX As Integer = (playContext.Width / 2) - (quizImages(quizNumber).Width / 2) - (quizImages(quizNumber).Width / 6)
+        Dim quizResultImageX As Integer = (playContext.Width / 2) - (quizResultImages(quizNumber).Width / 2) - (quizResultImages(quizNumber).Width / 6)
         If playResult = False Then
-            e.Graphics.DrawImage(quizImages(quizNumber), quizImageWidth, 50)
+            e.Graphics.DrawImage(quizImages(quizNumber), quizImageX, 50)
         Else
-            e.Graphics.DrawImage(quizResultImages(quizNumber), quizResultImageWidth, 50)
+            e.Graphics.DrawImage(quizResultImages(quizNumber), quizResultImageX, 50)
         End If
     End Sub
 
