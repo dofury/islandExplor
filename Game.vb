@@ -6,6 +6,8 @@ Public Class Game
     Dim titleImage As Image
     Dim homeImage As Image
     Dim village_entry As Image
+    Dim village_main As Image
+
     Dim gameItems(10) As Image
     Dim quizImages(10) As Image
     Dim quizResultImages(10) As Image
@@ -221,13 +223,17 @@ Public Class Game
         titleImage = My.Resources.title
         homeImage = My.Resources.home
         village_entry = My.Resources.village_entry
+        village_main = My.Resources.village_main
+
         quizImages(0) = My.Resources.quiz1
         quizImages(1) = My.Resources.quiz2
+
         quizResultImages(0) = quizImages(0)
         quizResultImages(1) = My.Resources.quiz2_result
 
-        gameItems(0) = My.Resources.stock '주식'
+        gameItems(0) = My.Resources.stock_1 '주식'
         gameItems(1) = My.Resources.map_and_letter '맵과 편지'
+        gameItems(2) = My.Resources.stock_2
     End Sub
     Private Sub Sound_Load()
         gameSound.AddSound("title", "sound/Adventure Starting.mp3")
@@ -260,8 +266,10 @@ Public Class Game
                 End If
 
             Case 2
-                If story >= 0 Then
+                If story <= 17 Then
                     e.Graphics.DrawImage(village_entry, 0, 0, Me.Width - 15, Me.Height)
+                ElseIf story >= 18 Then
+                    e.Graphics.DrawImage(village_main, 0, 0, Me.Width - 15, Me.Height)
                 End If
 
         End Select
@@ -357,13 +365,16 @@ Public Class Game
                 akControl = False 'skip auto 사용불가
             Case 10
                 quiz_Show()
-            Case 17
-            Case 19
-            Case 20
-            Case 24
-            Case 25
             Case 30
+                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
+                akControl = False 'skip auto 사용불가
             Case 31
+                quiz_Show()
+            Case 46
+                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
+                akControl = False 'skip auto 사용불가
+            Case 47
+                quiz_Show()
         End Select
     End Sub
     Private Sub Portrait(check As Boolean)
@@ -513,7 +524,7 @@ Public Class Game
 
     Private Sub Game_Next() '다음 게임 텍스트로 넘어가는 함수
         Object_MouseClick()
-        If story = 33 Then
+        If stage = 1 And story = 33 Then
             stage += 1
             story = 0
             loading_Show()
