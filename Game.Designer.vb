@@ -262,7 +262,7 @@ Partial Class Game
         'infoText
         '
         Me.infoText.AutoSize = True
-        Me.infoText.Location = New System.Drawing.Point(37, 27)
+        Me.infoText.Location = New System.Drawing.Point(37, 31)
         Me.infoText.Name = "infoText"
         Me.infoText.Size = New System.Drawing.Size(43, 15)
         Me.infoText.TabIndex = 1
@@ -421,7 +421,7 @@ Partial Class Game
         '
         Me.loadingContext.BackColor = System.Drawing.Color.Black
         Me.loadingContext.Controls.Add(Me.loadingText)
-        Me.loadingContext.Location = New System.Drawing.Point(498, 608)
+        Me.loadingContext.Location = New System.Drawing.Point(498, 153)
         Me.loadingContext.Name = "loadingContext"
         Me.loadingContext.Size = New System.Drawing.Size(200, 121)
         Me.loadingContext.TabIndex = 11

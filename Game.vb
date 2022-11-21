@@ -14,11 +14,6 @@ Public Class Game
 
     Dim inputKeys As New ArrayList
 
-    Dim stage As Integer
-    Dim story As Integer
-    Dim quizNumber As Integer
-
-
     Dim autoCheck As Boolean = False
     Dim skipCheck As Boolean = False
 
@@ -34,16 +29,6 @@ Public Class Game
     Dim gText As String
     Dim gTextCount As Integer
 
-    Dim loadfiles As String
-    Dim loadfile() As String
-    Dim loadTexts As String
-    Dim loadText() As String
-    Dim loadQuizzes As String
-    Dim loadQuiz() As String
-
-    Dim loadQuizCount As Integer
-    Dim loadTextCount As Integer
-
     Dim playResultText As String
     Dim playResult As Boolean
 
@@ -58,16 +43,19 @@ Public Class Game
     Dim tfont_16 As Font
     Dim tfont_24 As Font
     Dim tfont_32 As Font
+    Dim fileSystem As New FileSystem '파일관련처리 클래스'
 
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Start_Init()
         Init()
     End Sub
-    Private Sub Start_Init()
+    Private Sub Start_Init() '최초 초기화 함수
 
         CheckForIllegalCrossThreadCalls = False '스레드 체크 해제'
-        LoadStory() '대본 불러오기
-        LoadPuzzle() '퀴즈 불러오기
+
+        fileSystem.LoadStory() '스토리 불러오기
+        fileSystem.LoadQuiz() '퀴즈 불러오기
+
 
         font_naver.AddFontFile("font/MaruBuri-Regular.ttf") '폰트 설정
         font_naver.AddFontFile("font/MaruBuri-Bold.ttf")
@@ -95,20 +83,20 @@ Public Class Game
         playTextContent.Height = 200
         playTextContent.Location = New Point(0, 400)
 
-        playText.Text = loadQuiz(loadQuizCount)
-        playTextContent.Text = loadQuiz(loadQuizCount + 1)
-        hintLabelContent.Text = loadQuiz(loadQuizCount + 2)
-        playResultText = loadQuiz(loadQuizCount + 3)
+        playText.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount)
+        playTextContent.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 1)
+        hintLabelContent.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 2)
+        playResultText = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 3)
 
         playTextInput.Width = playContext.Width / 4
         playTextInput.Location = New Point(playContext.Width / 2 - playTextInput.Width / 2, 700)
 
         okButton.Location = New Point(playContext.Width / 2 - okButton.Width / 2, 700)
-        okButton.Hide()
 
         loadingContext.Width = Me.Width
         loadingContext.Height = Me.Height
-        loadingContext.Location = New Point(0, 0)
+        loadingContext.Location = New Point(0, 1)
+
         loadingText.Font = tfont_32
         loadingText.Text = "로딩중"
         loadingText.Location = New Point(loadingContext.Width / 2 - loadingText.Width / 2, loadingContext.Height / 2 - loadingText.Height / 2)
@@ -156,6 +144,7 @@ Public Class Game
         gameName.Font = tfont_16
 
         infoDraw() '게임 정보, 저작권 표시'
+
     End Sub
     Private Sub infoDraw()
         infoText.Font = tfont_16
@@ -176,33 +165,44 @@ Public Class Game
         infoText.Text += "● 효과음" + vbCrLf
         infoText.Text += "대한민국 대표 BGM 셀바이뮤직 https://www.sellbuymusic.com"
     End Sub
-    Private Sub Init()
+    Private Sub Init() '초기화 함수
         BGM_Stop()
         SE_Stop()
 
-        gameContext.Hide()
-        gameIcon.Hide()
-        gameName.Hide()
+        gameContext.Enabled = False
+        gameIcon.Enabled = False
+        gameName.Enabled = False
 
-        startButton.Show()
-        infoButton.Show()
-        endButton.Show()
-        stage = 0
-        story = 0
-        quizNumber = 0
-        loadTextCount = 0
-        loadQuizCount = 0
-        timerInterval = 0
-        playResult = False
+        startButton.Enabled = True
+        infoButton.Enabled = True
+        endButton.Enabled = True
+
 
         playContext.Enabled = False
         gameContext.Enabled = False
         gameIcon.Enabled = False
 
+        loadingContext.Enabled = False
+        infoContext.Enabled = False
+        okButton.Enabled = False
+        hintContext.Enabled = False
 
+        playResult = False
         akControl = False
+
+        fileSystem.gameStage = 0
+        fileSystem.gameStep = 0
+
+        fileSystem.quizNumber = 0
+
+        fileSystem.loadStoryTextCount = 0
+        fileSystem.loadQuizTextCount = 0
+
+        timerInterval = 0
+
         gameName.Text = ""
         playTextInput.Text = ""
+        Invalidate()
         gameSound.Play("title")
     End Sub
     Private Sub BGM_Stop()
@@ -211,16 +211,6 @@ Public Class Game
         gameSound.Stop("living")
         gameSound.Stop("village")
 
-    End Sub
-
-    Private Sub LoadStory() '스토리 원고 로드 함수'
-        loadTexts = My.Computer.FileSystem.ReadAllText("story.txt")
-        loadText = loadTexts.Split(vbCrLf)
-    End Sub
-
-    Private Sub LoadPuzzle()
-        loadQuizzes = My.Computer.FileSystem.ReadAllText("quiz.txt")
-        loadQuiz = loadQuizzes.Split("/")
     End Sub
 
     Private Sub SE_Stop()
@@ -273,22 +263,22 @@ Public Class Game
         gameSound.SetVolume("title", 80)
     End Sub
     Private Sub Game_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
-        Select Case stage
+        Select Case fileSystem.gameStage
             Case 0
                 e.Graphics.DrawImage(titleImage, 0, 0, Me.Width - 15, Me.Height)
             Case 1
                 e.Graphics.DrawImage(homeImage, 0, 0, Me.Width - 15, Me.Height)
-                If story = 3 Or story = 4 Then
+                If fileSystem.gameStep = 3 Or fileSystem.gameStep = 4 Then
                     e.Graphics.DrawImage(gameItems(0), getGameItemW(0), getGameItemH(0, 0))
                     'stock
-                ElseIf story = 27 Then
+                ElseIf fileSystem.gameStep = 27 Then
                     e.Graphics.DrawImage(gameItems(1), getGameItemW(1), getGameItemH(1, -50))
                 End If
 
             Case 2
-                If story <= 17 Then
+                If fileSystem.gameStep <= 17 Then
                     e.Graphics.DrawImage(village_entry, 0, 0, Me.Width - 15, Me.Height)
-                ElseIf story >= 18 Then
+                ElseIf fileSystem.gameStep >= 18 Then
                     e.Graphics.DrawImage(village_main, 0, 0, Me.Width - 15, Me.Height)
                 End If
 
@@ -316,6 +306,36 @@ Public Class Game
         Else
             playContext.Show()
         End If
+
+        If loadingContext.Enabled = False Then
+            loadingContext.Hide()
+        Else
+            loadingContext.Show()
+        End If
+
+        If infoContext.Enabled = False Then
+            infoContext.Hide()
+        Else
+            infoContext.Show()
+        End If
+
+        If startButton.Enabled = False Then
+            startButton.Hide()
+        Else
+            startButton.Show()
+        End If
+
+        If infoButton.Enabled = False Then
+            infoButton.Hide()
+        Else
+            infoButton.Show()
+        End If
+
+        If endButton.Enabled = False Then
+            endButton.Hide()
+        Else
+            endButton.Show()
+        End If
     End Sub
 
 
@@ -328,20 +348,20 @@ Public Class Game
         Dim gameItemH = Me.Height / 2 - gameItems(0).Height / 2 - 100 + h
         Return CInt(gameItemH)
     End Function
-    Private Sub Story_1()
+    Private Sub Stage_1()
 
-        setPortrait(loadText(loadTextCount))
-        Story_1_Event()
-        gText = loadText(loadTextCount + 1)
+        setPortrait(fileSystem.loadStoryText(fileSystem.loadStoryTextCount))
+        Stage_1_Event()
+        gText = fileSystem.loadStoryText(fileSystem.loadStoryTextCount + 1)
         Invalidate()
         textTypingTimer.Start()
     End Sub
-    Private Sub Story_1_Event()
+    Private Sub Stage_1_Event()
         If gameSound.IsPlaying("living") = False Then
             BGM_Stop()
             gameSound.Play("living")
         End If
-        Select Case story 'story.txt 위치 계산 공식 (story+1)*2
+        Select Case fileSystem.gameStep 'story.txt 위치 계산 공식 (story+1)*2
             Case 0
                 gamePortrait.BackgroundImage = My.Resources.home
             Case 1
@@ -385,20 +405,20 @@ Public Class Game
         End Select
     End Sub
 
-    Private Sub Story_2()
+    Private Sub Stage_2()
 
-        setPortrait(loadText(loadTextCount))
-        Story_2_Event()
-        gText = loadText(loadTextCount + 1)
+        setPortrait(fileSystem.loadStoryText(fileSystem.loadStoryTextCount))
+        Stage_2_Event()
+        gText = fileSystem.loadStoryText(fileSystem.loadStoryTextCount + 1)
         Invalidate()
         textTypingTimer.Start()
     End Sub
-    Private Sub Story_2_Event()
+    Private Sub Stage_2_Event()
         If gameSound.IsPlaying("village") = False Then
             BGM_Stop()
             gameSound.Play("village")
         End If
-        Select Case story 'story.txt 위치 계산 공식 x/2 - 34
+        Select Case fileSystem.gameStep 'story.txt 위치 계산 공식 x/2 - 34
             Case 0
                 gamePortrait.BackgroundImage = My.Resources.village_entry
             Case 10
@@ -411,11 +431,11 @@ Public Class Game
     End Sub
     Private Sub Portrait(check As Boolean)
         If check = False Then
-            gamePortrait.Hide()
-            gameName.Hide()
+            gamePortrait.Enabled = False
+            gameName.Enabled = False
         Else
-            gamePortrait.Show()
-            gameName.Show()
+            gamePortrait.Enabled = True
+            gameName.Enabled = True
         End If
     End Sub
 
@@ -525,8 +545,10 @@ Public Class Game
             Else
                 loadingText.Text = "로딩중"
                 loadingCount = 0
+                loadingContext.Enabled = False
+                Invalidate()
                 systemTimer.Stop()
-                loadingContext.Hide()
+
 
             End If
 
@@ -534,25 +556,24 @@ Public Class Game
 
     End Sub
     Private Sub playResult_On()
-        Invalidate()
         hintContext.Enabled = False
         playTextInput.Enabled = False
         checkButton.Enabled = False
         hintButton.Enabled = False
-
+        okButton.Enabled = True
+        playTextContent.Text = playResultText
         Invalidate()
 
-        okButton.Show()
-        playTextContent.Text = playResultText
     End Sub
 
     Private Sub playResult_Off()
         playResult = False
-        okButton.Hide()
+        okButton.Enabled = False
+        checkButton.Enabled = True
+        playTextInput.Enabled = True
+        hintButton.Enabled = True
         playTextContent.Text = ""
-        checkButton.Show()
-        playTextInput.Show()
-        hintButton.Show()
+        Invalidate()
     End Sub
 
     Private Sub gameContext_Click(sender As Object, e As EventArgs) Handles gameContext.Click
@@ -565,20 +586,25 @@ Public Class Game
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
         BGM_Stop()
         Object_MouseClick()
-        gameContext.Enabled = True
         akControl = True
-        stage += 1
-        startButton.Hide() '게임을 시작하고 게임버튼 숨김'
-        infoButton.Hide()
-        endButton.Hide()
-        gameContext.Show()
-        gameName.Show()
+        fileSystem.gameStage += 1
+
+        '게임을 시작하고 게임버튼 숨김'
+        startButton.Enabled = False
+        infoButton.Enabled = False
+        endButton.Enabled = False
+
+        gameContext.Enabled = True
+        gameContext.Enabled = True
+        gameName.Enabled = True
+        Invalidate()
         Game_Next()
         loading_Show()
     End Sub
 
     Private Sub loading_Show()
-        loadingContext.Show()
+        loadingContext.Enabled = True
+        Invalidate()
         systemTimerType = "loading"
         systemTimer.Interval = 100
         systemTimer.Start()
@@ -601,25 +627,25 @@ Public Class Game
             gameText.Text = gText
             textTypingTimer.Stop()
         Else
-            If loadTextCount < loadText.Length - 2 Then
-                story += 1
-                loadTextCount += 2
+            If fileSystem.loadStoryTextCount < fileSystem.loadStoryText.Length - 2 Then
+                fileSystem.gameStep += 1
+                fileSystem.loadStoryTextCount += 2
             End If
         End If
 
     End Sub
 
     Private Sub Game_Next() '다음 게임 텍스트로 넘어가는 함수
-        If stage = 1 And story = 33 Then
-            stage += 1
-            story = 0
+        If fileSystem.gameStage = 1 And fileSystem.gameStep = 33 Then
+            fileSystem.gameStage += 1
+            fileSystem.gameStep = 0
             loading_Show()
         End If
-        Select Case stage
+        Select Case fileSystem.gameStage
             Case 1
-                Story_1()
+                Stage_1()
             Case 2
-                Story_2()
+                Stage_2()
         End Select
 
     End Sub
@@ -661,10 +687,11 @@ Public Class Game
     End Sub
 
     Private Sub gameIcon_Click(sender As Object, e As EventArgs) Handles gameIcon.Click
-        gameContext.Enabled = True
         Object_MouseClick()
-        gameContext.Show()
-        gameIcon.Hide()
+
+        gameContext.Enabled = True
+        gameIcon.Enabled = False
+        Invalidate()
     End Sub
 
     Private Sub closeMenu_MouseHover(sender As Object, e As EventArgs) Handles closeMenu.MouseHover
@@ -745,16 +772,7 @@ Public Class Game
 
     Private Sub saveMenu_Click(sender As Object, e As EventArgs) Handles saveMenu.Click
         Object_MouseClick()
-        Dim token As String = "/".ToString
-        My.Computer.FileSystem.WriteAllText("save.txt", stage, False)
-        My.Computer.FileSystem.WriteAllText("save.txt", token, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", story, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", token, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", loadTextCount, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", token, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", quizNumber, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", token, True)
-        My.Computer.FileSystem.WriteAllText("save.txt", loadQuizCount, True)
+        fileSystem.saveMenu_Click()
     End Sub
 
     Private Sub saveMenu_MouseHover(sender As Object, e As EventArgs) Handles saveMenu.MouseHover
@@ -769,13 +787,7 @@ Public Class Game
     Private Sub loadMenu_Click(sender As Object, e As EventArgs) Handles loadMenu.Click
         gameSound.Play("tick")
         SE_Stop()
-        loadfiles = My.Computer.FileSystem.ReadAllText("save.txt")
-        loadfile = loadfiles.Split("/")
-        stage = loadfile(0)
-        story = loadfile(1)
-        loadTextCount = loadfile(2)
-        quizNumber = loadfile(3)
-        loadQuizCount = loadfile(4)
+        fileSystem.loadMenu_Click()
         game_Progress()
 
     End Sub
@@ -800,18 +812,25 @@ Public Class Game
 
     Private Sub infoButton_Click(sender As Object, e As EventArgs) Handles infoButton.Click
         Object_MouseClick()
-        startButton.Hide()
-        infoButton.Hide()
-        endButton.Hide()
-        infoContext.Show()
+
+        startButton.Enabled = False
+        infoButton.Enabled = False
+        endButton.Enabled = False
+        Invalidate()
+        infoContext.Enabled = True
+
+        Invalidate()
     End Sub
 
     Private Sub infoXButton_Click(sender As Object, e As EventArgs) Handles infoXButton.Click
         Object_MouseClick()
-        startButton.Show()
-        infoButton.Show()
-        endButton.Show()
-        infoContext.Hide()
+
+        startButton.Enabled = True
+        infoButton.Enabled = True
+        endButton.Enabled = True
+        infoContext.Enabled = False
+
+        Invalidate()
     End Sub
 
     Private Sub infoText_TextChanged(sender As Object, e As EventArgs) Handles infoText.TextChanged
@@ -831,18 +850,18 @@ Public Class Game
     End Sub
 
     Private Sub playContext_Paint(sender As Object, e As PaintEventArgs) Handles playContext.Paint
-        Dim quizImageX As Integer = (playContext.Width / 2) - (quizImages(quizNumber).Width / 2) - (quizImages(quizNumber).Width / 6)
-        Dim quizResultImageX As Integer = (playContext.Width / 2) - (quizResultImages(quizNumber).Width / 2) - (quizResultImages(quizNumber).Width / 6)
+        Dim quizImageX As Integer = (playContext.Width / 2) - (quizImages(fileSystem.quizNumber).Width / 2) - (quizImages(fileSystem.quizNumber).Width / 6)
+        Dim quizResultImageX As Integer = (playContext.Width / 2) - (quizResultImages(fileSystem.quizNumber).Width / 2) - (quizResultImages(fileSystem.quizNumber).Width / 6)
         If playResult = False Then
-            e.Graphics.DrawImage(quizImages(quizNumber), quizImageX, 50)
+            e.Graphics.DrawImage(quizImages(fileSystem.quizNumber), quizImageX, 50)
         Else
-            e.Graphics.DrawImage(quizResultImages(quizNumber), quizResultImageX, 50)
+            e.Graphics.DrawImage(quizResultImages(fileSystem.quizNumber), quizResultImageX, 50)
         End If
         playContext_Check()
     End Sub
 
     Private Sub checkButton_Click(sender As Object, e As EventArgs) Handles checkButton.Click '정답 버튼'
-        Select Case quizNumber
+        Select Case fileSystem.quizNumber
             Case 0
                 Try
                     If playTextInput.Text = 0 Then
@@ -907,7 +926,8 @@ Public Class Game
 
     Private Sub hintButton_Click(sender As Object, e As EventArgs) Handles hintButton.Click
         Object_MouseClick()
-        hintContext.Show()
+        hintContext.Enabled = True
+        Invalidate()
     End Sub
 
     Private Sub checkButton_MouseHover(sender As Object, e As EventArgs) Handles checkButton.MouseHover
@@ -940,7 +960,8 @@ Public Class Game
 
     Private Sub hintXButton_Click(sender As Object, e As EventArgs) Handles hintXButton.Click
         Object_MouseClick()
-        hintContext.Hide()
+        hintContext.Enabled = False
+        Invalidate()
     End Sub
 
     Private Sub hintXButton_MouseHover(sender As Object, e As EventArgs) Handles hintXButton.MouseHover
@@ -954,10 +975,10 @@ Public Class Game
         gameContext.Enabled = False
         gameIcon.Enabled = False
         Invalidate()
-        playText.Text = loadQuiz(loadQuizCount)
-        playTextContent.Text = loadQuiz(loadQuizCount + 1)
-        hintLabelContent.Text = loadQuiz(loadQuizCount + 2)
-        playResultText = loadQuiz(loadQuizCount + 3)
+        playText.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount)
+        playTextContent.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 1)
+        hintLabelContent.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 2)
+        playResultText = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 3)
     End Sub
 
     Private Sub TextTimer_Stop()
@@ -976,8 +997,8 @@ Public Class Game
         playContext.Enabled = False
         akControl = True
         Invalidate()
-        loadQuizCount += 4
-        quizNumber += 1
+        fileSystem.loadQuizTextCount += 4
+        fileSystem.quizNumber += 1
     End Sub
 
     Private Sub Game_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -998,7 +1019,65 @@ Public Class Game
     End Sub
 
     Private Sub gameContext_Check()
+        If gameName.Enabled = False Then
+            gameName.Hide()
+        Else
+            gameName.Show()
+        End If
 
+        If gamePortrait.Enabled = False Then
+            gamePortrait.Hide()
+        Else
+            gamePortrait.Show()
+        End If
+
+        If gameText.Enabled = False Then
+            gameText.Hide()
+        Else
+            gameText.Show()
+        End If
+
+        If saveMenu.Enabled = False Then
+            saveMenu.Hide()
+        Else
+            saveMenu.Show()
+        End If
+
+        If loadMenu.Enabled = False Then
+            loadMenu.Hide()
+        Else
+            loadMenu.Show()
+        End If
+
+        If skipMenu.Enabled = False Then
+            skipMenu.Hide()
+        Else
+            skipMenu.Show()
+        End If
+
+        If autoMenu.Enabled = False Then
+            autoMenu.Hide()
+        Else
+            autoMenu.Show()
+        End If
+
+        If closeMenu.Enabled = False Then
+            closeMenu.Hide()
+        Else
+            closeMenu.Show()
+        End If
+
+        If titleMenu.Enabled = False Then
+            titleMenu.Hide()
+        Else
+            titleMenu.Show()
+        End If
+
+        If quitMenu.Enabled = False Then
+            quitMenu.Hide()
+        Else
+            quitMenu.Show()
+        End If
     End Sub
 
     Private Sub playContext_Check()
@@ -1021,6 +1100,12 @@ Public Class Game
             hintButton.Show()
         End If
 
+        If hintContext.Enabled = False Then
+            hintContext.Hide()
+        Else
+            hintContext.Show()
+        End If
+
         If checkButton.Enabled = False Then
             checkButton.Hide()
         Else
@@ -1033,7 +1118,27 @@ Public Class Game
             playTextInput.Show()
         End If
 
+        If okButton.Enabled = False Then
+            okButton.Hide()
+        Else
+            okButton.Show()
+        End If
 
     End Sub
 
+    Private Sub loadingContext_Paint(sender As Object, e As PaintEventArgs) Handles loadingContext.Paint
+        If loadingText.Enabled = False Then
+            loadingText.Hide()
+        Else
+            loadingText.Show()
+        End If
+    End Sub
+
+    Private Sub infoContext_Paint(sender As Object, e As PaintEventArgs) Handles infoContext.Paint
+        If infoText.Enabled = False Then
+            infoText.Hide()
+        Else
+            infoText.Show()
+        End If
+    End Sub
 End Class
