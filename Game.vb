@@ -12,15 +12,19 @@ Public Class Game
     Dim quizImages(10) As Image
     Dim quizResultImages(10) As Image
 
+    Dim inputKeys As New ArrayList
+
     Dim stage As Integer
     Dim story As Integer
     Dim quizNumber As Integer
+
 
     Dim autoCheck As Boolean = False
     Dim skipCheck As Boolean = False
 
     Private textTimer As System.Timers.Timer
     Private textTypingTimer As System.Timers.Timer
+    Private keyboardTimer As System.Timers.Timer
     Private systemTimer As System.Timers.Timer
 
     Private systemTimerType As String
@@ -43,7 +47,7 @@ Public Class Game
     Dim playResultText As String
     Dim playResult As Boolean
 
-    Dim akControl As Boolean = True
+    Dim akControl As Boolean
 
     Dim gameSound As New GameSounds
 
@@ -140,6 +144,11 @@ Public Class Game
         systemTimer.AutoReset = True
         AddHandler systemTimer.Elapsed, AddressOf systemTimer_On
 
+        keyboardTimer = New Timers.Timer(timerInterval)
+        keyboardTimer.Interval = 100
+        keyboardTimer.AutoReset = True
+        AddHandler keyboardTimer.Elapsed, AddressOf keyInput
+
         Image_Load()
         Sound_Load()
 
@@ -170,9 +179,11 @@ Public Class Game
     Private Sub Init()
         BGM_Stop()
         SE_Stop()
+
         gameContext.Hide()
         gameIcon.Hide()
         gameName.Hide()
+
         startButton.Show()
         infoButton.Show()
         endButton.Show()
@@ -183,6 +194,13 @@ Public Class Game
         loadQuizCount = 0
         timerInterval = 0
         playResult = False
+
+        playContext.Enabled = False
+        gameContext.Enabled = False
+        gameIcon.Enabled = False
+
+
+        akControl = False
         gameName.Text = ""
         playTextInput.Text = ""
         gameSound.Play("title")
@@ -227,9 +245,11 @@ Public Class Game
 
         quizImages(0) = My.Resources.quiz1
         quizImages(1) = My.Resources.quiz2
+        quizImages(2) = My.Resources.quiz2
 
         quizResultImages(0) = quizImages(0)
         quizResultImages(1) = My.Resources.quiz2_result
+        quizResultImages(2) = quizImages(2)
 
         gameItems(0) = My.Resources.stock_1 '주식'
         gameItems(1) = My.Resources.map_and_letter '맵과 편지'
@@ -273,7 +293,31 @@ Public Class Game
                 End If
 
         End Select
+        formContext_Check()
+
     End Sub
+
+    Private Sub formContext_Check()
+        If gameContext.Enabled = False Then
+            gameContext.Hide()
+        Else
+            gameContext.Show()
+        End If
+
+        If gameIcon.Enabled = False Then
+            gameIcon.Hide()
+        Else
+            gameIcon.Show()
+        End If
+
+
+        If playContext.Enabled = False Then
+            playContext.Hide()
+        Else
+            playContext.Show()
+        End If
+    End Sub
+
 
     Private Function getGameItemW(i As Integer)
         Dim gameItemW = Me.Width / 2 - gameItems(i).Width / 2
@@ -336,9 +380,6 @@ Public Class Game
                 End If
             Case 25
                 gameSound.Stop("writePen")
-            Case 30
-                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
-                akControl = False 'skip auto 사용불가
             Case 31
                 quiz_Show()
         End Select
@@ -360,19 +401,10 @@ Public Class Game
         Select Case story 'story.txt 위치 계산 공식 x/2 - 34
             Case 0
                 gamePortrait.BackgroundImage = My.Resources.village_entry
-            Case 9
-                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
-                akControl = False 'skip auto 사용불가
             Case 10
                 quiz_Show()
-            Case 30
-                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
-                akControl = False 'skip auto 사용불가
             Case 31
                 quiz_Show()
-            Case 46
-                TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
-                akControl = False 'skip auto 사용불가
             Case 47
                 quiz_Show()
         End Select
@@ -386,12 +418,43 @@ Public Class Game
             gameName.Show()
         End If
     End Sub
+
+    Private Sub keyInput()
+        For i = 0 To inputKeys.Count - 1
+            If inputKeys(i) = Keys.Space Then
+                game_Progress()
+            ElseIf inputKeys(i) = Keys.Enter Then
+                Object_MouseClick()
+                If gameContext.Enabled = False And akControl = True Then
+                    gameContext.Enabled = True
+                    gameIcon.Enabled = False
+                    Invalidate()
+                ElseIf gameContext.Enabled = True And akControl = True Then
+                    gameContext.Enabled = False
+                    gameIcon.Enabled = True
+                    Invalidate()
+                End If
+            End If
+        Next
+    End Sub
     Private Sub setPortrait(name As String)
         Select Case name
             Case "김춘배"
                 Portrait(True)
                 gameName.Text = name
-                gamePortrait.Image = My.Resources.hero
+                gamePortrait.Image = My.Resources.chunbae
+            Case "김나비"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.nabi
+            Case "???"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.nabi
+            Case "김영철"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.youngchul
             Case "이박사"
                 Portrait(True)
                 gameName.Text = name
@@ -404,6 +467,18 @@ Public Class Game
                 Portrait(True)
                 gameName.Text = name
                 gamePortrait.Image = My.Resources.vayne
+            Case "에이빈"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.abin
+            Case "빈스"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.bins
+            Case "시스터"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.cster
             Case Else
                 Portrait(False)
         End Select
@@ -459,16 +534,20 @@ Public Class Game
 
     End Sub
     Private Sub playResult_On()
+        Invalidate()
+        hintContext.Enabled = False
+        playTextInput.Enabled = False
+        checkButton.Enabled = False
+        hintButton.Enabled = False
+
+        Invalidate()
+
         okButton.Show()
         playTextContent.Text = playResultText
-        checkButton.Hide()
-        playTextInput.Hide()
-        hintButton.Hide()
     End Sub
 
     Private Sub playResult_Off()
         playResult = False
-        akControl = True
         okButton.Hide()
         playTextContent.Text = ""
         checkButton.Show()
@@ -486,6 +565,8 @@ Public Class Game
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
         BGM_Stop()
         Object_MouseClick()
+        gameContext.Enabled = True
+        akControl = True
         stage += 1
         startButton.Hide() '게임을 시작하고 게임버튼 숨김'
         infoButton.Hide()
@@ -493,7 +574,6 @@ Public Class Game
         gameContext.Show()
         gameName.Show()
         Game_Next()
-        Invalidate()
         loading_Show()
     End Sub
 
@@ -505,8 +585,15 @@ Public Class Game
     End Sub
     Private Sub gameText_Click(sender As Object, e As EventArgs) Handles gameText.Click
         TextTimer_Stop()
-        gameText_Check()
-        Game_Next()
+        game_Progress()
+    End Sub
+
+    Private Sub game_Progress() '대화를 빠르게 진행시 퀴즈를 풀기전에 story가 진행해버려 에러가 생김
+        If akControl = True Then
+            Object_MouseClick()
+            gameText_Check()
+            Game_Next()
+        End If
     End Sub
 
     Private Sub gameText_Check()
@@ -523,7 +610,6 @@ Public Class Game
     End Sub
 
     Private Sub Game_Next() '다음 게임 텍스트로 넘어가는 함수
-        Object_MouseClick()
         If stage = 1 And story = 33 Then
             stage += 1
             story = 0
@@ -535,6 +621,7 @@ Public Class Game
             Case 2
                 Story_2()
         End Select
+
     End Sub
 
     Private Sub titleMenu_Click(sender As Object, e As EventArgs) Handles titleMenu.Click
@@ -568,11 +655,13 @@ Public Class Game
 
     Private Sub closeMenu_Click(sender As Object, e As EventArgs) Handles closeMenu.Click
         Object_MouseClick()
-        gameContext.Hide()
-        gameIcon.Show()
+        gameContext.Enabled = False
+        gameIcon.Enabled = True
+        Invalidate()
     End Sub
 
     Private Sub gameIcon_Click(sender As Object, e As EventArgs) Handles gameIcon.Click
+        gameContext.Enabled = True
         Object_MouseClick()
         gameContext.Show()
         gameIcon.Hide()
@@ -603,8 +692,7 @@ Public Class Game
 
     End Sub
     Private Sub autoSkipMenu_On()
-        gameText_Check()
-        Game_Next()
+        game_Progress()
     End Sub
 
     Private Sub autoMenu_MouseHover(sender As Object, e As EventArgs) Handles autoMenu.MouseHover
@@ -688,9 +776,7 @@ Public Class Game
         loadTextCount = loadfile(2)
         quizNumber = loadfile(3)
         loadQuizCount = loadfile(4)
-        Invalidate()
-        gameText_Check()
-        Game_Next()
+        game_Progress()
 
     End Sub
 
@@ -752,6 +838,7 @@ Public Class Game
         Else
             e.Graphics.DrawImage(quizResultImages(quizNumber), quizResultImageX, 50)
         End If
+        playContext_Check()
     End Sub
 
     Private Sub checkButton_Click(sender As Object, e As EventArgs) Handles checkButton.Click '정답 버튼'
@@ -761,8 +848,6 @@ Public Class Game
                     If playTextInput.Text = 0 Then
                         quiz_Correct("quizCheck")
                         playTextInput.Text = ""
-                        hintContext.Hide()
-                        Invalidate()
                     Else
                         Throw New System.Exception("오답")
                     End If
@@ -774,8 +859,17 @@ Public Class Game
                     If playTextInput.Text = 4 Then
                         quiz_Correct("quizCheck")
                         playTextInput.Text = ""
-                        hintContext.Hide()
-                        Invalidate()
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect("quizCheck")
+                End Try
+            Case 2
+                Try
+                    If playTextInput.Text = 4 Then
+                        quiz_Correct("quizCheck")
+                        playTextInput.Text = ""
                     Else
                         Throw New System.Exception("오답")
                     End If
@@ -854,12 +948,16 @@ Public Class Game
     End Sub
 
     Private Sub quiz_Show()
+        TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
+        akControl = False 'skip auto 사용불가
+        playContext.Enabled = True
+        gameContext.Enabled = False
+        gameIcon.Enabled = False
+        Invalidate()
         playText.Text = loadQuiz(loadQuizCount)
         playTextContent.Text = loadQuiz(loadQuizCount + 1)
         hintLabelContent.Text = loadQuiz(loadQuizCount + 2)
         playResultText = loadQuiz(loadQuizCount + 3)
-        playContext.Show()
-        gameContext.Hide()
     End Sub
 
     Private Sub TextTimer_Stop()
@@ -874,9 +972,68 @@ Public Class Game
 
     Private Sub okButton_Click(sender As Object, e As EventArgs) Handles okButton.Click
         playResult_Off()
-        playContext.Hide()
+        gameContext.Enabled = True
+        playContext.Enabled = False
+        akControl = True
+        Invalidate()
         loadQuizCount += 4
         quizNumber += 1
-        gameContext.Show()
     End Sub
+
+    Private Sub Game_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        keyboardTimer.Start()
+        If Not inputKeys.Contains(e.KeyCode) Then
+            inputKeys.Add(e.KeyCode)
+        End If
+    End Sub
+
+    Private Sub Game_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
+        keyboardTimer.Stop()
+        inputKeys.Remove(e.KeyCode)
+    End Sub
+
+    Private Sub gameContext_Paint(sender As Object, e As PaintEventArgs) Handles gameContext.Paint
+
+        gameContext_Check()
+    End Sub
+
+    Private Sub gameContext_Check()
+
+    End Sub
+
+    Private Sub playContext_Check()
+
+        If playText.Enabled = False Then
+            playText.Hide()
+        Else
+            playText.Show()
+        End If
+
+        If playTextContent.Enabled = False Then
+            playTextContent.Hide()
+        Else
+            playTextContent.Show()
+        End If
+
+        If hintButton.Enabled = False Then
+            hintButton.Hide()
+        Else
+            hintButton.Show()
+        End If
+
+        If checkButton.Enabled = False Then
+            checkButton.Hide()
+        Else
+            checkButton.Show()
+        End If
+
+        If playTextInput.Enabled = False Then
+            playTextInput.Hide()
+        Else
+            playTextInput.Show()
+        End If
+
+
+    End Sub
+
 End Class

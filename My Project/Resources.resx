@@ -127,9 +127,6 @@
   <data name="endButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\endButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hero" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -181,6 +178,21 @@
   <data name="vayne" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vayne.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="abin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\abin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bins" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bins.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="chunbae" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\chunbae.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cster" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nabi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nabi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="stock_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stock_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -189,5 +201,8 @@
   </data>
   <data name="village_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\village_main.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="youngchul" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\youngchul.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
