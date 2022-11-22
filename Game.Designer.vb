@@ -22,6 +22,7 @@ Partial Class Game
     '코드 편집기에서는 수정하지 마세요.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Game))
         Me.gameText = New System.Windows.Forms.Label()
         Me.gameContext = New System.Windows.Forms.Panel()
@@ -53,8 +54,8 @@ Partial Class Game
         Me.checkButton = New System.Windows.Forms.PictureBox()
         Me.playTextInput = New System.Windows.Forms.TextBox()
         Me.playText = New System.Windows.Forms.Label()
-        Me.loadingContext = New System.Windows.Forms.Panel()
         Me.loadingText = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,13 +70,12 @@ Partial Class Game
         CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.loadingContext.SuspendLayout()
         Me.SuspendLayout()
         '
         'gameText
         '
         Me.gameText.BackColor = System.Drawing.Color.Transparent
-        Me.gameText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.gameText.Font = New System.Drawing.Font("함초롬돋움", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.gameText.Location = New System.Drawing.Point(223, 57)
         Me.gameText.Margin = New System.Windows.Forms.Padding(0)
         Me.gameText.Name = "gameText"
@@ -176,7 +176,7 @@ Partial Class Game
         'gameName
         '
         Me.gameName.BackColor = System.Drawing.Color.Transparent
-        Me.gameName.Font = New System.Drawing.Font("한컴 말랑말랑 Bold", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.gameName.Font = New System.Drawing.Font("함초롬돋움", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.gameName.Location = New System.Drawing.Point(37, 187)
         Me.gameName.Margin = New System.Windows.Forms.Padding(0)
         Me.gameName.Name = "gameName"
@@ -187,7 +187,7 @@ Partial Class Game
         '
         'gamePortrait
         '
-        Me.gamePortrait.BackgroundImage = Global.islandExploration.My.Resources.Resources.home
+        Me.gamePortrait.BackgroundImage = Global.islandExploration.My.Resources.Resources.loading
         Me.gamePortrait.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.gamePortrait.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.gamePortrait.Image = CType(resources.GetObject("gamePortrait.Image"), System.Drawing.Image)
@@ -262,9 +262,10 @@ Partial Class Game
         'infoText
         '
         Me.infoText.AutoSize = True
+        Me.infoText.Font = New System.Drawing.Font("함초롬돋움", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.infoText.Location = New System.Drawing.Point(37, 31)
         Me.infoText.Name = "infoText"
-        Me.infoText.Size = New System.Drawing.Size(43, 15)
+        Me.infoText.Size = New System.Drawing.Size(72, 27)
         Me.infoText.TabIndex = 1
         Me.infoText.Text = "메세지"
         '
@@ -323,7 +324,7 @@ Partial Class Game
         '
         'hintLabelContent
         '
-        Me.hintLabelContent.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.hintLabelContent.Font = New System.Drawing.Font("함초롬돋움", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.hintLabelContent.Location = New System.Drawing.Point(3, 88)
         Me.hintLabelContent.Name = "hintLabelContent"
         Me.hintLabelContent.Size = New System.Drawing.Size(341, 190)
@@ -334,11 +335,11 @@ Partial Class Game
         'hintLabel
         '
         Me.hintLabel.BackColor = System.Drawing.Color.Transparent
-        Me.hintLabel.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.hintLabel.Font = New System.Drawing.Font("함초롬돋움", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.hintLabel.Location = New System.Drawing.Point(0, 0)
         Me.hintLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.hintLabel.Name = "hintLabel"
-        Me.hintLabel.Size = New System.Drawing.Size(102, 41)
+        Me.hintLabel.Size = New System.Drawing.Size(128, 41)
         Me.hintLabel.TabIndex = 17
         Me.hintLabel.Text = "메세지"
         Me.hintLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -356,7 +357,7 @@ Partial Class Game
         'playTextContent
         '
         Me.playTextContent.BackColor = System.Drawing.Color.Transparent
-        Me.playTextContent.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.playTextContent.Font = New System.Drawing.Font("함초롬돋움", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.playTextContent.Location = New System.Drawing.Point(103, 14)
         Me.playTextContent.Margin = New System.Windows.Forms.Padding(0)
         Me.playTextContent.Name = "playTextContent"
@@ -368,10 +369,10 @@ Partial Class Game
         'quizCheck
         '
         Me.quizCheck.AutoSize = True
-        Me.quizCheck.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.quizCheck.Font = New System.Drawing.Font("함초롬돋움", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.quizCheck.Location = New System.Drawing.Point(20, 55)
         Me.quizCheck.Name = "quizCheck"
-        Me.quizCheck.Size = New System.Drawing.Size(60, 35)
+        Me.quizCheck.Size = New System.Drawing.Size(52, 27)
         Me.quizCheck.TabIndex = 15
         Me.quizCheck.Text = "체크"
         '
@@ -397,7 +398,7 @@ Partial Class Game
         '
         'playTextInput
         '
-        Me.playTextInput.Font = New System.Drawing.Font("맑은 고딕", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.playTextInput.Font = New System.Drawing.Font("함초롬돋움", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.playTextInput.Location = New System.Drawing.Point(11, 93)
         Me.playTextInput.Name = "playTextInput"
         Me.playTextInput.Size = New System.Drawing.Size(100, 39)
@@ -408,7 +409,7 @@ Partial Class Game
         'playText
         '
         Me.playText.BackColor = System.Drawing.Color.Transparent
-        Me.playText.Font = New System.Drawing.Font("한컴 말랑말랑 Regular", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.playText.Font = New System.Drawing.Font("함초롬돋움", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.playText.Location = New System.Drawing.Point(11, 14)
         Me.playText.Margin = New System.Windows.Forms.Padding(0)
         Me.playText.Name = "playText"
@@ -417,26 +418,21 @@ Partial Class Game
         Me.playText.Text = "제목"
         Me.playText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'loadingContext
-        '
-        Me.loadingContext.BackColor = System.Drawing.Color.Black
-        Me.loadingContext.Controls.Add(Me.loadingText)
-        Me.loadingContext.Location = New System.Drawing.Point(498, 153)
-        Me.loadingContext.Name = "loadingContext"
-        Me.loadingContext.Size = New System.Drawing.Size(200, 121)
-        Me.loadingContext.TabIndex = 11
-        Me.loadingContext.Visible = False
-        '
         'loadingText
         '
         Me.loadingText.AutoSize = True
         Me.loadingText.BackColor = System.Drawing.Color.Transparent
+        Me.loadingText.Font = New System.Drawing.Font("함초롬돋움", 32.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.loadingText.ForeColor = System.Drawing.Color.White
-        Me.loadingText.Location = New System.Drawing.Point(74, 56)
+        Me.loadingText.Location = New System.Drawing.Point(548, 636)
         Me.loadingText.Name = "loadingText"
-        Me.loadingText.Size = New System.Drawing.Size(43, 15)
+        Me.loadingText.Size = New System.Drawing.Size(150, 56)
         Me.loadingText.TabIndex = 12
         Me.loadingText.Text = "메세지"
+        '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
         '
         'Game
         '
@@ -444,7 +440,7 @@ Partial Class Game
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1264, 985)
-        Me.Controls.Add(Me.loadingContext)
+        Me.Controls.Add(Me.loadingText)
         Me.Controls.Add(Me.playContext)
         Me.Controls.Add(Me.endButton)
         Me.Controls.Add(Me.infoButton)
@@ -478,8 +474,6 @@ Partial Class Game
         CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.loadingContext.ResumeLayout(False)
-        Me.loadingContext.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -513,7 +507,7 @@ Partial Class Game
     Friend WithEvents hintLabelContent As Label
     Friend WithEvents hintLabel As Label
     Friend WithEvents playTextContent As Label
-    Friend WithEvents loadingContext As Panel
     Friend WithEvents loadingText As Label
     Friend WithEvents okButton As PictureBox
+    Friend WithEvents Timer1 As Timer
 End Class
