@@ -1,4 +1,5 @@
-﻿Imports System.Drawing.Text
+﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.Drawing.Text
 Imports System.IO.Compression
 Imports System.Net.Security
 Imports islandExploration.SoundSystem
@@ -9,6 +10,7 @@ Public Class Game
     Dim homeImage As Image
     Dim village_entry As Image
     Dim village_main As Image
+    Dim village_alley As Image
 
     Dim gameItems(10) As Image
     Dim quizImages(10) As Image
@@ -66,9 +68,10 @@ Public Class Game
         tfont_24 = New Font(font_naver.Families(0), 24)
         tfont_32 = New Font(font_naver.Families(0), 32)
 
-        startButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 - 10) '버튼 위치조절'
-        infoButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 90) '버튼 위치조절'
-        endButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 190) '버튼 위치조절'
+        startButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 - 50) '버튼 위치조절'
+        loadButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 50)
+        infoButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 150) '버튼 위치조절'
+        endButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 250) '버튼 위치조절'
 
         infoContext.Height = Me.Height
         infoContext.Location = New Point(0, 0)
@@ -172,6 +175,7 @@ Public Class Game
         startButton.Enabled = True
         infoButton.Enabled = True
         endButton.Enabled = True
+        loadButton.Enabled = True
 
 
         playContext.Enabled = False
@@ -191,6 +195,8 @@ Public Class Game
 
         gameStageReset()
         gameStepReset()
+
+
         fileSystem.quizNumber = 0
 
         fileSystem.loadStoryTextCount = 0
@@ -210,18 +216,22 @@ Public Class Game
 
         village_entry = My.Resources.village_entry
         village_main = My.Resources.village_main
+        village_alley = My.Resources.village_alley
 
         quizImages(0) = My.Resources.quiz1
         quizImages(1) = My.Resources.quiz2
-        quizImages(2) = My.Resources.quiz2
+        quizImages(2) = My.Resources.quiz3
+        quizImages(3) = My.Resources.quiz4
 
         quizResultImages(0) = quizImages(0)
         quizResultImages(1) = My.Resources.quiz2_result
         quizResultImages(2) = quizImages(2)
+        quizResultImages(3) = quizImages(3)
 
         gameItems(0) = My.Resources.stock_1 '주식'
         gameItems(1) = My.Resources.map_and_letter '맵과 편지'
-        gameItems(2) = My.Resources.stock_2
+        gameItems(2) = My.Resources.stock_2 '주식2'
+        gameItems(3) = My.Resources.nabiPhoto
     End Sub
     Private Sub Game_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
         Select Case fileSystem.gameStage
@@ -241,6 +251,17 @@ Public Class Game
                     e.Graphics.DrawImage(village_entry, 0, 0, getFormWidth(), getFormHeight)
                 ElseIf fileSystem.gameStep >= 18 Then
                     e.Graphics.DrawImage(village_main, 0, 0, getFormWidth(), getFormHeight)
+                End If
+            Case 3
+                If fileSystem.gameStep <= 32 Then
+                    e.Graphics.DrawImage(village_alley, 0, 0, getFormWidth(), getFormHeight)
+                Else
+                    e.Graphics.DrawImage(village_main, 0, 0, getFormWidth(), getFormHeight)
+                End If
+                If fileSystem.gameStep = 14 Then
+                    e.Graphics.DrawImage(gameItems(2), getGameItemW(2), getGameItemH(2, 0))
+                ElseIf fileSystem.gameStep = 28 Then
+                    e.Graphics.DrawImage(gameItems(3), getGameItemW(3), getGameItemH(3, 0))
                 End If
 
         End Select
@@ -294,6 +315,12 @@ Public Class Game
             infoButton.Hide()
         Else
             infoButton.Show()
+        End If
+
+        If loadButton.Enabled = False Then
+            loadButton.Hide()
+        Else
+            loadButton.Show()
         End If
 
         If endButton.Enabled = False Then
@@ -351,9 +378,29 @@ Public Class Game
                 gamePortrait.BackgroundImage = My.Resources.village_entry
             Case 10
                 quiz_Show()
+            Case 18
+                soundSystem.bgmName = "village_alley"
             Case 31
                 quiz_Show()
-            Case 47
+            Case 49
+                quiz_Show()
+        End Select
+    End Sub
+
+    Private Sub Stage_3()
+
+        setPortrait(fileSystem.loadStoryText(fileSystem.loadStoryTextCount))
+        Stage_3_Event()
+        gText = fileSystem.loadStoryText(fileSystem.loadStoryTextCount + 1)
+        Invalidate()
+        textTypingTimer.Start()
+    End Sub
+
+    Private Sub Stage_3_Event()
+        Select Case fileSystem.gameStep 'story.txt 위치 계산 공식 x/2 - 72
+            Case 0
+                gamePortrait.BackgroundImage = My.Resources.village_entry
+            Case 11
                 quiz_Show()
         End Select
     End Sub
@@ -402,7 +449,7 @@ Public Class Game
             Case "김영철"
                 Portrait(True)
                 gameName.Text = name
-                gamePortrait.Image = My.Resources.youngchul
+                gamePortrait.Image = My.Resources.youngcheol
             Case "이박사"
                 Portrait(True)
                 gameName.Text = name
@@ -522,8 +569,8 @@ Public Class Game
         startButton.Enabled = False
         infoButton.Enabled = False
         endButton.Enabled = False
+        loadButton.Enabled = False
 
-        gameContext.Enabled = True
         gameContext.Enabled = True
         gameName.Enabled = True
         gameStageNext()
@@ -535,11 +582,11 @@ Public Class Game
 
     Private Sub gameStageNext()
         fileSystem.gameStage += 1
-        soundSystem.setStage(soundSystem.getStage + 1)
+        soundSystem.setStage(fileSystem.gameStage)
     End Sub
     Private Sub gameStepNext()
         fileSystem.gameStep += 1
-        soundSystem.setStep(soundSystem.getStep + 1)
+        soundSystem.setStep(fileSystem.gameStep)
     End Sub
 
     Private Sub gameStepReset()
@@ -555,6 +602,7 @@ Public Class Game
         loadingImageEnabled = True
         loadingText.Enabled = True
         gameContext.Enabled = False
+        playContext.Enabled = False
 
         Invalidate()
         systemTimerType = "loading"
@@ -595,6 +643,8 @@ Public Class Game
                 Stage_1()
             Case 2
                 Stage_2()
+            Case 3
+                Stage_3()
         End Select
 
     End Sub
@@ -604,6 +654,13 @@ Public Class Game
             gameStageNext()
             gameStepReset()
             loading_Show()
+            TextTimer_Stop()
+        End If
+        If fileSystem.gameStage = 2 And fileSystem.gameStep = 38 Then
+            gameStageNext()
+            gameStepReset()
+            loading_Show()
+            TextTimer_Stop()
         End If
     End Sub
 
@@ -729,7 +786,9 @@ Public Class Game
 
     Private Sub saveMenu_Click(sender As Object, e As EventArgs) Handles saveMenu.Click
         Object_MouseClick()
+        fileSystem.setBGMName(soundSystem.bgmName)
         fileSystem.saveMenu_Click()
+
     End Sub
 
     Private Sub saveMenu_MouseHover(sender As Object, e As EventArgs) Handles saveMenu.MouseHover
@@ -742,11 +801,15 @@ Public Class Game
     End Sub
 
     Private Sub loadMenu_Click(sender As Object, e As EventArgs) Handles loadMenu.Click
-        Object_MouseClick()
-        soundSystem.SE_Stop()
-        fileSystem.loadMenu_Click()
-        game_akCheck_Next()
-
+        If Not fileSystem.loadMenu_Click() = 0 Then
+            soundSystem.SE_Stop()
+            soundSystem.setStage(fileSystem.gameStage)
+            soundSystem.setStep(fileSystem.gameStep)
+            soundSystem.bgmName = fileSystem.getBGMName
+            Object_MouseClick()
+            Game_Next()
+            loading_Show()
+        End If
     End Sub
 
     Private Sub loadMenu_MouseHover(sender As Object, e As EventArgs) Handles loadMenu.MouseHover
@@ -772,8 +835,8 @@ Public Class Game
 
         startButton.Enabled = False
         infoButton.Enabled = False
+        loadButton.Enabled = False
         endButton.Enabled = False
-        Invalidate()
         infoContext.Enabled = True
 
         Invalidate()
@@ -843,7 +906,18 @@ Public Class Game
                 End Try
             Case 2
                 Try
-                    If playTextInput.Text = 4 Then
+                    If playTextInput.Text = 50 Then
+                        quiz_Correct()
+                        playTextInput.Text = ""
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect()
+                End Try
+            Case 3
+                Try
+                    If playTextInput.Text = 3 Then
                         quiz_Correct()
                         playTextInput.Text = ""
                     Else
@@ -929,9 +1003,10 @@ Public Class Game
         TextTimer_Stop() 'skip and auto 일시 퀴즈 전에 멈춤
         soundSystem.soundCheckStop() '타이머 정지'
         akControl = False 'skip auto 사용불가
-        playContext.Enabled = True
         gameContext.Enabled = False
         gameIcon.Enabled = False
+        Invalidate()
+        playContext.Enabled = True
         Invalidate()
         playText.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount)
         playTextContent.Text = fileSystem.loadQuizText(fileSystem.loadQuizTextCount + 1)
@@ -1100,4 +1175,30 @@ Public Class Game
         End If
     End Sub
 
+    Private Sub loadButton_Click(sender As Object, e As EventArgs) Handles loadButton.Click
+
+        If Not fileSystem.loadMenu_Click() = 0 Then
+            soundSystem.BGM_Stop()
+            soundSystem.SE_Stop()
+            Object_MouseClick()
+            soundSystem.setStage(fileSystem.gameStage)
+            soundSystem.setStep(fileSystem.gameStep)
+            soundSystem.bgmName = fileSystem.getBGMName
+            startButton.Enabled = False
+            infoButton.Enabled = False
+            loadButton.Enabled = False
+            endButton.Enabled = False
+            gameContext.Enabled = True
+            gameName.Enabled = True
+            playContext.Enabled = False
+            akControl = True
+            Invalidate()
+            Game_Next()
+            loading_Show()
+        End If
+    End Sub
+
+    Public Sub setBGMName(name As String)
+        soundSystem.bgmName = fileSystem.getBGMName
+    End Sub
 End Class

@@ -9,6 +9,7 @@ Public Class FileSystem
     Dim loadSaveTexts As String
     Dim loadSaveText() As String
 
+    Dim bgmName As String
 
     Public loadStoryTexts As String
     Public loadStoryText() As String
@@ -20,7 +21,13 @@ Public Class FileSystem
     Public loadQuizTextCount As Integer
 
 
+    Public Sub setBGMName(name As String)
+        Me.bgmName = name
+    End Sub
 
+    Public Function getBGMName()
+        Return Me.bgmName
+    End Function
 
     Public Sub LoadStory() '스토리 대본을 불러오는 함수
         loadStoryTexts = My.Computer.FileSystem.ReadAllText("story.txt")
@@ -44,15 +51,27 @@ Public Class FileSystem
         My.Computer.FileSystem.WriteAllText("save.txt", quizNumber, True)
         My.Computer.FileSystem.WriteAllText("save.txt", token, True)
         My.Computer.FileSystem.WriteAllText("save.txt", loadQuizTextCount, True)
+        My.Computer.FileSystem.WriteAllText("save.txt", token, True)
+        My.Computer.FileSystem.WriteAllText("save.txt", bgmName, True)
     End Sub
 
-    Public Sub loadMenu_Click()
-        loadSaveTexts = My.Computer.FileSystem.ReadAllText("save.txt")
-        loadSaveText = loadSaveTexts.Split("/")
-        gameStage = loadSaveText(0)
-        gameStep = loadSaveText(1)
-        loadStoryTextCount = loadSaveText(2)
-        quizNumber = loadSaveText(3)
-        loadQuizTextCount = loadSaveText(4)
-    End Sub
+    Public Function loadMenu_Click()
+        Try
+            loadSaveTexts = My.Computer.FileSystem.ReadAllText("save.txt")
+            loadSaveText = loadSaveTexts.Split("/")
+
+            gameStage = loadSaveText(0)
+            gameStep = loadSaveText(1)
+            loadStoryTextCount = loadSaveText(2)
+            quizNumber = loadSaveText(3)
+            loadQuizTextCount = loadSaveText(4)
+            bgmName = loadSaveText(5)
+
+        Catch ex As Exception
+            MsgBox("불러올 저장 파일이 없습니다", MsgBoxStyle.Critical, "경고")
+            Return 0
+        End Try
+        Return 1
+
+    End Function
 End Class

@@ -183,6 +183,16 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property loadButton() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loadButton", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property loading() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("loading", resourceCulture)
@@ -206,6 +216,16 @@ Namespace My.Resources
         Friend ReadOnly Property nabi() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("nabi", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property nabiPhoto() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("nabiPhoto", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -273,6 +293,26 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property quiz3() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("quiz3", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property quiz4() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("quiz4", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property startButton() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("startButton", resourceCulture)
@@ -323,9 +363,29 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property village_alley() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("village_alley", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property village_entry() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("village_entry", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property village_fountain() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("village_fountain", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -353,9 +413,9 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
-        Friend ReadOnly Property youngchul() As System.Drawing.Bitmap
+        Friend ReadOnly Property youngcheol() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("youngchul", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("youngcheol", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

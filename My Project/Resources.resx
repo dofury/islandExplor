@@ -202,10 +202,28 @@
   <data name="village_main" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\village_main.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="youngchul" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\youngchul.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="loadButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\loadButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\loading.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="quiz3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quiz3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="quiz4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quiz4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="village_alley" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\village_alley.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="village_fountain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\village_fountain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="youngcheol" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\youngcheol.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nabiPhoto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nabiPhoto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

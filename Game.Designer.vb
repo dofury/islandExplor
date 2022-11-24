@@ -22,7 +22,6 @@ Partial Class Game
     '코드 편집기에서는 수정하지 마세요.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Game))
         Me.gameText = New System.Windows.Forms.Label()
         Me.gameContext = New System.Windows.Forms.Panel()
@@ -55,7 +54,7 @@ Partial Class Game
         Me.playTextInput = New System.Windows.Forms.TextBox()
         Me.playText = New System.Windows.Forms.Label()
         Me.loadingText = New System.Windows.Forms.Label()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.loadButton = New System.Windows.Forms.PictureBox()
         Me.gameContext.SuspendLayout()
         CType(Me.gamePortrait, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gameIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,6 +69,7 @@ Partial Class Game
         CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.loadButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'gameText
@@ -187,7 +187,7 @@ Partial Class Game
         '
         'gamePortrait
         '
-        Me.gamePortrait.BackgroundImage = Global.islandExploration.My.Resources.Resources.loading
+        Me.gamePortrait.BackgroundImage = Global.islandExploration.My.Resources.Resources.context
         Me.gamePortrait.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.gamePortrait.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.gamePortrait.Image = CType(resources.GetObject("gamePortrait.Image"), System.Drawing.Image)
@@ -215,7 +215,7 @@ Partial Class Game
         Me.startButton.BackColor = System.Drawing.Color.Transparent
         Me.startButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.startButton.Image = Global.islandExploration.My.Resources.Resources.startButton
-        Me.startButton.Location = New System.Drawing.Point(498, 383)
+        Me.startButton.Location = New System.Drawing.Point(497, 322)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(270, 69)
         Me.startButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -227,7 +227,7 @@ Partial Class Game
         Me.infoButton.BackColor = System.Drawing.Color.Transparent
         Me.infoButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.infoButton.Image = Global.islandExploration.My.Resources.Resources.infoButton
-        Me.infoButton.Location = New System.Drawing.Point(497, 458)
+        Me.infoButton.Location = New System.Drawing.Point(497, 472)
         Me.infoButton.Name = "infoButton"
         Me.infoButton.Size = New System.Drawing.Size(270, 69)
         Me.infoButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -239,7 +239,7 @@ Partial Class Game
         Me.endButton.BackColor = System.Drawing.Color.Transparent
         Me.endButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.endButton.Image = Global.islandExploration.My.Resources.Resources.endButton
-        Me.endButton.Location = New System.Drawing.Point(498, 533)
+        Me.endButton.Location = New System.Drawing.Point(497, 547)
         Me.endButton.Name = "endButton"
         Me.endButton.Size = New System.Drawing.Size(270, 69)
         Me.endButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -430,9 +430,17 @@ Partial Class Game
         Me.loadingText.TabIndex = 12
         Me.loadingText.Text = "메세지"
         '
-        'Timer1
+        'loadButton
         '
-        Me.Timer1.Enabled = True
+        Me.loadButton.BackColor = System.Drawing.Color.Transparent
+        Me.loadButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.loadButton.Image = Global.islandExploration.My.Resources.Resources.loadButton
+        Me.loadButton.Location = New System.Drawing.Point(497, 397)
+        Me.loadButton.Name = "loadButton"
+        Me.loadButton.Size = New System.Drawing.Size(270, 69)
+        Me.loadButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.loadButton.TabIndex = 13
+        Me.loadButton.TabStop = False
         '
         'Game
         '
@@ -440,6 +448,7 @@ Partial Class Game
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1264, 985)
+        Me.Controls.Add(Me.loadButton)
         Me.Controls.Add(Me.loadingText)
         Me.Controls.Add(Me.playContext)
         Me.Controls.Add(Me.endButton)
@@ -474,6 +483,7 @@ Partial Class Game
         CType(Me.hintXButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.hintButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.checkButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.loadButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -509,5 +519,5 @@ Partial Class Game
     Friend WithEvents playTextContent As Label
     Friend WithEvents loadingText As Label
     Friend WithEvents okButton As PictureBox
-    Friend WithEvents Timer1 As Timer
+    Friend WithEvents loadButton As PictureBox
 End Class
