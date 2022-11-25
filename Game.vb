@@ -11,6 +11,7 @@ Public Class Game
     Dim village_entry As Image
     Dim village_main As Image
     Dim village_alley As Image
+    Dim village_fountain As Image
 
     Dim gameItems(10) As Image
     Dim quizImages(10) As Image
@@ -217,16 +218,27 @@ Public Class Game
         village_entry = My.Resources.village_entry
         village_main = My.Resources.village_main
         village_alley = My.Resources.village_alley
+        village_fountain = My.Resources.village_fountain
 
         quizImages(0) = My.Resources.quiz1
         quizImages(1) = My.Resources.quiz2
         quizImages(2) = My.Resources.quiz3
         quizImages(3) = My.Resources.quiz4
 
+        quizImages(4) = My.Resources.quiz5
+        quizImages(5) = My.Resources.quiz6
+        quizImages(6) = My.Resources.quiz7
+        quizImages(7) = My.Resources.quiz8
+
         quizResultImages(0) = quizImages(0)
         quizResultImages(1) = My.Resources.quiz2_result
         quizResultImages(2) = quizImages(2)
         quizResultImages(3) = quizImages(3)
+
+        quizResultImages(4) = quizImages(4)
+        quizResultImages(5) = quizImages(5)
+        quizResultImages(6) = quizImages(6)
+        quizResultImages(7) = quizImages(7)
 
         gameItems(0) = My.Resources.stock_1 '주식'
         gameItems(1) = My.Resources.map_and_letter '맵과 편지'
@@ -255,6 +267,10 @@ Public Class Game
             Case 3
                 If fileSystem.gameStep <= 32 Then
                     e.Graphics.DrawImage(village_alley, 0, 0, getFormWidth(), getFormHeight)
+                ElseIf fileSystem.gameStep < 60 Then
+                    e.Graphics.DrawImage(village_main, 0, 0, getFormWidth(), getFormHeight)
+                ElseIf fileSystem.gameStep < 81 Then
+                    e.Graphics.DrawImage(village_fountain, 0, 0, getFormWidth(), getFormHeight)
                 Else
                     e.Graphics.DrawImage(village_main, 0, 0, getFormWidth(), getFormHeight)
                 End If
@@ -401,6 +417,14 @@ Public Class Game
             Case 0
                 gamePortrait.BackgroundImage = My.Resources.village_entry
             Case 11
+                quiz_Show()
+            Case 65
+                quiz_Show()
+            Case 71
+                quiz_Show()
+            Case 78
+                quiz_Show()
+            Case 86
                 quiz_Show()
         End Select
     End Sub
@@ -870,15 +894,20 @@ Public Class Game
     End Sub
 
     Private Sub playContext_Paint(sender As Object, e As PaintEventArgs) Handles playContext.Paint
-        Dim quizImageX As Integer = (playContext.Width / 2) - (quizImages(fileSystem.quizNumber).Width / 2) - (quizImages(fileSystem.quizNumber).Width / 6)
-        Dim quizResultImageX As Integer = (playContext.Width / 2) - (quizResultImages(fileSystem.quizNumber).Width / 2) - (quizResultImages(fileSystem.quizNumber).Width / 6)
         If playResult = False Then
-            e.Graphics.DrawImage(quizImages(fileSystem.quizNumber), quizImageX, 50)
+            e.Graphics.DrawImage(quizImages(fileSystem.quizNumber), getQuizImageX, 50, quizImages(fileSystem.quizNumber).Width, quizImages(fileSystem.quizNumber).Height)
         Else
-            e.Graphics.DrawImage(quizResultImages(fileSystem.quizNumber), quizResultImageX, 50)
+            e.Graphics.DrawImage(quizResultImages(fileSystem.quizNumber), getResultQuizImageX, 50, quizResultImages(fileSystem.quizNumber).Width, quizResultImages(fileSystem.quizNumber).Height)
         End If
         playContext_Check()
     End Sub
+
+    Private Function getQuizImageX()
+        Return CInt((playContext.Width / 2) - (quizImages(fileSystem.quizNumber).Width / 2))
+    End Function
+    Private Function getResultQuizImageX()
+        Return CInt((playContext.Width / 2) - (quizResultImages(fileSystem.quizNumber).Width / 2))
+    End Function
 
     Private Sub checkButton_Click(sender As Object, e As EventArgs) Handles checkButton.Click '정답 버튼'
         Select Case fileSystem.quizNumber
@@ -918,6 +947,50 @@ Public Class Game
             Case 3
                 Try
                     If playTextInput.Text = 3 Then
+                        quiz_Correct()
+                        playTextInput.Text = ""
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect()
+                End Try
+            Case 4
+                Try
+                    If playTextInput.Text = 3 Then
+                        quiz_Correct()
+                        playTextInput.Text = ""
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect()
+                End Try
+            Case 5
+                Try
+                    If playTextInput.Text = 1 Then
+                        quiz_Correct()
+                        playTextInput.Text = ""
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect()
+                End Try
+            Case 6
+                Try
+                    If playTextInput.Text = 8 Then
+                        quiz_Correct()
+                        playTextInput.Text = ""
+                    Else
+                        Throw New System.Exception("오답")
+                    End If
+                Catch ex As Exception
+                    quiz_Incorrect()
+                End Try
+            Case 7
+                Try
+                    If playTextInput.Text = 59 Then
                         quiz_Correct()
                         playTextInput.Text = ""
                     Else

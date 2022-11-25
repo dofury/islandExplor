@@ -37,8 +37,12 @@ Public Class SoundSystem
         gameSound.AddSound("pop", "sound/Blop Sound.mp3")
         gameSound.AddSound("village", "sound/Tongtong.mp3")
         gameSound.AddSound("village_alley", "sound/Morning Kiss.wav")
+        gameSound.AddSound("sad", "sound/고향의 봄.mp3")
+        gameSound.AddSound("ending", "sound/Play!.mp3")
         gameSound.SetVolume("house", 90)
         gameSound.SetVolume("title", 90)
+        gameSound.SetVolume("village", 90)
+        gameSound.SetVolume("village_alley", 90)
     End Sub
 
     Delegate Sub playSound() '델리게이트 선언
@@ -81,6 +85,8 @@ Public Class SoundSystem
                 GetStage1SoundName()
             Case 2
                 GetStage2SoundName()
+            Case 3
+                GetStage3SoundName()
         End Select
     End Sub
 
@@ -143,6 +149,7 @@ Public Class SoundSystem
         gameSound.Stop("house")
         gameSound.Stop("village")
         gameSound.Stop("village_alley")
+        gameSound.Stop("sad")
 
     End Sub
 
@@ -152,6 +159,22 @@ Public Class SoundSystem
                 bgmName = "village"
             Case 18
                 bgmName = "village_alley"
+            Case Else
+                seName = ""
+                SE_Stop()
+        End Select
+    End Sub
+
+    Private Sub GetStage3SoundName()
+        Select Case gameStep 'story.txt 위치 계산 공식 x/2 - 34
+            Case 49
+                bgmName = "sad"
+            Case 60
+                bgmName = "village_alley"
+            Case 82
+                bgmName = "sad"
+            Case 86
+                bgmName = "ending"
             Case Else
                 seName = ""
                 SE_Stop()
