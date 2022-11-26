@@ -63,7 +63,7 @@ Public Class Game
 
         fileSystem.LoadStory() '스토리 불러오기
         fileSystem.LoadQuiz() '퀴즈 불러오기
-
+        fileSystem.loadInfo() '게임 정보 불러오기
 
         font_naver.AddFontFile("font/MaruBuri-Regular.ttf") '폰트 설정
         font_naver.AddFontFile("font/MaruBuri-Bold.ttf")
@@ -76,6 +76,7 @@ Public Class Game
         infoButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 150) '버튼 위치조절'
         endButton.Location = New Point(getFormWidth() / 2 - startButton.Width / 2, getFormHeight() / 2 + 250) '버튼 위치조절'
 
+        infoText.Text = ""
         infoContext.Height = Me.Height
         infoContext.Location = New Point(0, 0)
 
@@ -148,24 +149,9 @@ Public Class Game
 
     End Sub
     Private Sub infoDraw()
-        infoText.Text = ""
-        infoText.Text += "게임 소개:" + vbCrLf
-        infoText.Text += "이 게임은 퍼즐형 스토리 게임 입니다. 수수께끼의 해결을 통해 게임을 진행합니다." + vbCrLf
-        infoText.Text += "조작방법:" + vbCrLf
-        infoText.Text += "마우스로 진행, 키보드로 정답 입력, SPACE: 텍스트 넘기기, ENTER: 텍스트(열기/닫기)" + vbCrLf
-        infoText.Text += "제작자: 차도훈(도푸리)" + vbCrLf
-        infoText.Text += "저작권:" + vbCrLf
-        infoText.Text += "- 퀴즈" + vbCrLf
-        infoText.Text += "대부분의 퀴즈는 레이튼 교수 이상한 마을을 참고했습니다." + vbCrLf
-        infoText.Text += "- 이미지" + vbCrLf
-        infoText.Text += "게임의 모든 이미지는 novel AI를 통해 제작했습니다." + vbCrLf
-        infoText.Text += "- 노래" + vbCrLf
-        infoText.Text += "● 배경음악" + vbCrLf
-        infoText.Text += "HOW ARE YOU, 김재영, 공유마당" + vbCrLf + "https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13073758&menuNo=200020" + vbCrLf
-        infoText.Text += "Tong tong (통통), 이혜린, 공유마당" + vbCrLf + "https://gongu.copyright.or.kr/gongu/wrt/wrt/view.do?wrtSn=13048800&menuNo=200020" + vbCrLf
-        infoText.Text += "Adventure Starting" + vbCrLf
-        infoText.Text += "● 효과음" + vbCrLf
-        infoText.Text += "대한민국 대표 BGM 셀바이뮤직 https://www.sellbuymusic.com"
+        For i = 0 To fileSystem.loadInfoText.Length - 1
+            infoText.Text += fileSystem.loadInfoText(i) + vbCrLf
+        Next
     End Sub
     Private Sub Init() '초기화 함수
         soundSystem.BGM_Stop()

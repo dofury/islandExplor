@@ -9,6 +9,9 @@ Public Class FileSystem
     Dim loadSaveTexts As String
     Dim loadSaveText() As String
 
+    Dim loadInfoTexts As String
+    Public loadInfoText() As String
+
     Dim bgmName As String
 
     Public loadStoryTexts As String
@@ -40,6 +43,10 @@ Public Class FileSystem
         loadQuizText = loadQuizTexts.Split("/") '토큰기준 분리
     End Sub
 
+    Public Sub loadInfo()
+        loadInfoTexts = My.Computer.FileSystem.ReadAllText("info.txt")
+        loadInfoText = loadInfoTexts.Split(vbCrLf) '토큰기준 분리
+    End Sub
     Public Sub saveMenu_Click()
         Dim token As String = "/".ToString
         My.Computer.FileSystem.WriteAllText("save.txt", gameStage, False)
