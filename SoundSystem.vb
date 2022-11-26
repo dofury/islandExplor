@@ -150,6 +150,7 @@ Public Class SoundSystem
         gameSound.Stop("village")
         gameSound.Stop("village_alley")
         gameSound.Stop("sad")
+        gameSound.Stop("ending")
 
     End Sub
 
@@ -173,7 +174,7 @@ Public Class SoundSystem
                 bgmName = "village_alley"
             Case 82
                 bgmName = "sad"
-            Case 86
+            Case 87
                 bgmName = "ending"
             Case Else
                 seName = ""

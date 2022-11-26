@@ -133,9 +133,49 @@ Namespace My.Resources
         '''<summary>
         '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         '''</summary>
+        Friend ReadOnly Property dzen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("dzen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property efu() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("efu", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
         Friend ReadOnly Property endButton() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("endButton", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property gro() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("gro", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        '''</summary>
+        Friend ReadOnly Property hch() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("hch", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

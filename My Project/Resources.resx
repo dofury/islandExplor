@@ -238,4 +238,16 @@
   <data name="quiz8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\quiz8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dzen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dzen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="efu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\efu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

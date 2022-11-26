@@ -17,6 +17,8 @@ Public Class Game
     Dim quizImages(10) As Image
     Dim quizResultImages(10) As Image
 
+    Dim gameEnd As Boolean
+
     Dim inputKeys As New ArrayList
 
     Dim autoCheck As Boolean = False
@@ -193,6 +195,7 @@ Public Class Game
         playResult = False
         akControl = False
 
+        gameEnd = False
 
         gameStageReset()
         gameStepReset()
@@ -372,8 +375,6 @@ Public Class Game
     End Sub
     Private Sub Stage_1_Event()
         Select Case fileSystem.gameStep 'story.txt 위치 계산 공식 (story+1)*2
-            Case 0
-                gamePortrait.BackgroundImage = My.Resources.home
 
             Case 31
                 quiz_Show()
@@ -390,8 +391,6 @@ Public Class Game
     End Sub
     Private Sub Stage_2_Event()
         Select Case fileSystem.gameStep 'story.txt 위치 계산 공식 x/2 - 34
-            Case 0
-                gamePortrait.BackgroundImage = My.Resources.village_entry
             Case 10
                 quiz_Show()
             Case 18
@@ -414,10 +413,12 @@ Public Class Game
 
     Private Sub Stage_3_Event()
         Select Case fileSystem.gameStep 'story.txt 위치 계산 공식 x/2 - 72
-            Case 0
-                gamePortrait.BackgroundImage = My.Resources.village_entry
             Case 11
                 quiz_Show()
+            Case 49
+                soundSystem.bgmName = "sad"
+            Case 60
+                soundSystem.bgmName = "village_alley"
             Case 65
                 quiz_Show()
             Case 71
@@ -426,6 +427,10 @@ Public Class Game
                 quiz_Show()
             Case 86
                 quiz_Show()
+            Case 87
+                soundSystem.bgmName = "ending"
+            Case 94
+                gameEnd = True
         End Select
     End Sub
     Private Sub Portrait(check As Boolean)
@@ -498,6 +503,22 @@ Public Class Game
                 Portrait(True)
                 gameName.Text = name
                 gamePortrait.Image = My.Resources.cster
+            Case "디젠"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.dzen
+            Case "에푸"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.efu
+            Case "지로"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.gro
+            Case "에이치"
+                Portrait(True)
+                gameName.Text = name
+                gamePortrait.Image = My.Resources.hch
             Case Else
                 Portrait(False)
         End Select
@@ -685,6 +706,10 @@ Public Class Game
             gameStepReset()
             loading_Show()
             TextTimer_Stop()
+        End If
+        If gameEnd = True Then
+            Init()
+            Invalidate()
         End If
     End Sub
 
@@ -968,7 +993,7 @@ Public Class Game
                 End Try
             Case 5
                 Try
-                    If playTextInput.Text = 1 Then
+                    If playTextInput.Text = "a" Or playTextInput.Text = "A" Then
                         quiz_Correct()
                         playTextInput.Text = ""
                     Else
