@@ -879,10 +879,10 @@ Public Class Game
 
     Private Sub infoXButton_Click(sender As Object, e As EventArgs) Handles infoXButton.Click
         Object_MouseClick()
-
         startButton.Enabled = True
         infoButton.Enabled = True
         endButton.Enabled = True
+        loadButton.Enabled = True
         infoContext.Enabled = False
 
         Invalidate()
